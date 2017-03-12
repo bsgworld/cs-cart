@@ -11,6 +11,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 		fn_set_notification('I', __("accept_message_send"), $msg);
 		exit;
 	}
+
+	if ($mode == 'send_feedback')
+	{
+		fn_set_notification('N', __("success"), __("feedback_has_been_sent"));
+
+		return array(CONTROLLER_STATUS_OK, 'addons.update?addon=csc_amocrm');
+	}
 }
 else
 {

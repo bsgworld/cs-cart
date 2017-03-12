@@ -103,6 +103,31 @@
                     </item>
     			</items>
     		</section>
+            <section id="feedback">
+                <items>
+                    <item id="feedback_form">
+                        <type>info</type>
+                        <handler>fn_csc_amocrm_feedback_info</handler>
+                    </item>
+                </items>
+            </section>
+            <section id="help">
+                <items>
+                    <item id="help">
+                        <type>info</type>
+                        <handler>fn_csc_amocrm_help_info</handler>
+                    </item>
+                </items>
+            </section>
     	</sections>
     </settings>
+
+    <queries>
+        <item for="install">
+            ALTER TABLE `?:status_descriptions` ADD `amocrm_msg` VARCHAR(200) NOT NULL AFTER `lang_code`;
+        </item>
+        <item for="uninstall">
+            ALTER TABLE `?:status_descriptions` DROP `amocrm_msg`;
+        </item>
+    </queries>
 </addon>
