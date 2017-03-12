@@ -91,3 +91,46 @@ function fn_settings_variants_addons_csc_amocrm_customer_order_status_condition(
 
     return $result;
 }
+
+function fn_csc_amocrm_update_profile($action, $user_data, $current_user_data)
+{
+	if ($action == 'add' && $user_data['user_type'] == "C" && Registry::get('addons.csc_amocrm.new_user_registered') == "Y")
+	{
+		fn_set_notification('N', '', 'Смс админу о новом пользователе');
+	}
+}
+
+function fn_csc_amocrm_update_product_amount($new_amount, $product_id, $cart_id, $tracking)
+{
+	$product_data = fn_get_product_data($product_id, $_SESSION['auth']);
+	if ($new_amount < 0 && Registry::get('addons.csc_amocrm.stock_less_zero') == "Y")
+	{
+		fn_set_notification('N', '', 'Смс админу колво товара ' . $product_data['product'] . ' меньше нуля');
+	}
+}
+
+function fn_csc_amocrm_place_order($order_id, $action, $order_status, $cart, $auth)
+{
+	$min_order_total = Registry::get('addons.csc_amocrm.order_total_more_than');
+	$order_data = fn_get_order_info($order_id);
+
+	$available_shippings = Registry::get('addons.csc_amocrm.shippings_condition');
+	$available_statuses = Registry::get('addons.csc_amocrm.order_status_condition');
+	if ($order_data['total'] > $min_order_total && (empty($available_shippings) || isset($available_shippings['N']) || $available_shippings[$order_data['shipping_ids']] == "Y") && (empty($available_statuses) || isset($available_statuses['N']) || $available_statuses[$_REQUEST['order_status']] == "Y"))
+	{
+		if ($order_id && Registry::get('addons.csc_amocrm.stock_less_zero') == "Y" && Registry::get('runtime.mode') == 'place_order' && $action != 'save')
+		{
+			fn_set_notification('N', '', 'СМС админа новый заказ');
+		}
+
+		if ($action == "save" && Registry::get('addons.csc_amocrm.order_updated') == 'Y')
+		{
+			fn_set_notification('N', '', 'СМС админа заказ обновлен');
+		}
+	}
+}
+
+function fn_csc_amocrm_change_order_status($status_to, $status_from, $order_info, $force_notification, $order_statuses, $place_order)
+{
+	
+}
