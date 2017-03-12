@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<addon scheme="3.0">
+    <id>csc_amocrm</id>
+    <version>1.0</version>
+    <status>active</status>
+
+    <authors>
+        <author>
+            <name>CS-Coding</name>
+            <email>manager@cs-coding.com</email>
+            <url>http://cs-coding.com</url>
+        </author>
+    </authors>
+    <supplier>CS-Coding</supplier>
+    <supplier_link>http://cs-coding.com</supplier_link>
+
+    <settings layout="separate">
+    	<sections>
+    		<section id="general">
+    			<items>
+    				<item id="api_key">
+    					<type>input</type>
+    				</item>
+    				<item id="account">
+    					<type>info</type>
+    					<handler>fn_csc_amocrm_account_info</handler>
+    				</item>
+    			</items>
+    		</section>
+    		<section id="admin_notifications">
+    			<items>
+    				<item id="admin_phones">
+    					<type>input</type>
+    				</item>
+    				<item id="send_method">
+    					<type>multiple checkboxes</type>
+    					<variants>
+    						<item id="sms"></item>
+    						<item id="viber"></item>
+    						<item id="omni"></item>
+    					</variants>
+    				</item>
+    				<item id="send_conditions">
+                        <type>header</type>
+                    </item>
+                    <item id="new_user_registered">
+                    	<type>checkbox</type>
+                    </item>
+                    <item id="stock_less_zero">
+                    	<type>checkbox</type>
+                    </item>
+                    <item id="new_order">
+                    	<type>checkbox</type>
+                    </item>
+                    <item id="order_updated">
+                    	<type>checkbox</type>
+                    </item>
+                    <item id="order_total_more_than">
+                    	<type>input</type>
+                    	<default_value>0</default_value>
+                    </item>
+                    <item id="shippings_condition">
+                    	<type>multiple checkboxes</type>
+                    </item>
+                    <item id="order_status_condition">
+                    	<type>multiple checkboxes</type>
+                    </item>
+                    <item id="sms_content">
+                        <type>header</type>
+                    </item>
+                    <item id="include_payment_info">
+                    	<type>checkbox</type>
+                    </item>
+                    <item id="include_customer_email">
+                    	<type>checkbox</type>
+                    </item>
+    			</items>
+    		</section>
+    		<section id="customer_notifications">
+    			<items>
+    				<item id="phone_field">
+    					<type>selectbox</type>
+    					<variants>
+    						<item id="billing"></item>
+    						<item id="shipping"></item>
+    					</variants>
+    				</item>
+    				<item id="send_conditions">
+                        <type>header</type>
+                    </item>
+                    <item id="customer_order_updated">
+                    	<type>checkbox</type>
+                    </item>
+                    <item id="customer_shippings_condition">
+                    	<type>multiple checkboxes</type>
+                    </item>
+                    <item id="customer_order_status_condition">
+                    	<type>multiple checkboxes</type>
+                    </item>
+                    <item id="customer_order_total_more_than">
+                    	<type>input</type>
+                    	<default_value>0</default_value>
+                    </item>
+    			</items>
+    		</section>
+    	</sections>
+    </settings>
+</addon>
