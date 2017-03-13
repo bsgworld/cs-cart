@@ -289,3 +289,15 @@ msgstr "равен городу доставки"
 msgctxt "Languages::equals_shipping_state"
 msgid "equals shipping state"
 msgstr "равен области (району) доставки"
+
+msgctxt "Languages::accept_message_send"
+msgid "accept message send"
+msgstr "Подтвердите отправку сообщений"
+
+msgctxt "Languages::count_sms_to_send"
+msgid "messages count"
+msgstr "Количество сообщений для отправки"
+
+msgctxt "Languages::total_sms_cost"
+msgid "total sms cost"
+msgstr "Общая стоимость сообщений"
