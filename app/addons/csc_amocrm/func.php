@@ -136,7 +136,7 @@ function fn_csc_amocrm_change_order_status($status_to, $status_from, $order_info
 
 		if (Registry::get('addons.csc_amocrm.customer_order_updated') == 'Y')
 		{
-			fn_set_notification('N', '', "СМС админу о смене статуса\n" . $content);
+			fn_set_notification('N', '', "СМС покупателю о смене статуса\n" . $content);
 		}
 	}
 }
