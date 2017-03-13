@@ -13,8 +13,8 @@ msgstr ""
 "PO-Revision-Date: 2016-10-31 11:00-0400\n"
 
 msgctxt "Addons::name::csc_amocrm"
-msgid "CS-Coding: AmoCRM"
-msgstr "CS-Coding: AmoCRM"
+msgid "CS-Coding: BSG.World"
+msgstr "CS-Coding: BSG.World"
 
 msgctxt "Addons::description::csc_amocrm"
 msgid "Integration with AmoCrm"
