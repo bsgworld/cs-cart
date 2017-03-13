@@ -1,0 +1,291 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: cs-cart-ru\n"
+"Language-Team: Russian\n"
+"Language: ru_RU\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: crowdin.com\n"
+"X-Crowdin-Project: cs-cart-ru\n"
+"X-Crowdin-Language: ru\n"
+"X-Crowdin-File: /addons/csc_amocrm.po\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Last-Translator: cscart <zeke@cs-cart.com>\n"
+"PO-Revision-Date: 2016-10-31 11:00-0400\n"
+
+msgctxt "Addons::name::csc_amocrm"
+msgid "CS-Coding: AmoCRM"
+msgstr "CS-Coding: AmoCRM"
+
+msgctxt "Addons::description::csc_amocrm"
+msgid "Integration with AmoCrm"
+msgstr "Интеграция с AmoCRM"
+
+msgctxt "SettingsSections::csc_amocrm::general"
+msgid "General"
+msgstr "Общие"
+
+msgctxt "SettingsOptions::csc_amocrm::api_key"
+msgid "API Key"
+msgstr "API Key"
+
+msgctxt "SettingsSections::csc_amocrm::admin_notifications"
+msgid "Admin Notifications"
+msgstr "Уведомления Администратора"
+
+msgctxt "SettingsOptions::csc_amocrm::admin_phones"
+msgid "Admin phone numbers. Ex. +79xxxxxxxxx, +380xxxxxxxxxx"
+msgstr "Номера телефонов администраторов (через запятую) в международном формате. Например +7хххххххххх, +380хххххххххх."
+
+msgctxt "SettingsOptions::csc_amocrm::send_method"
+msgid "Способ отправки"
+msgstr "Способ отправки"
+
+msgctxt "SettingsVariants::csc_amocrm::send_method::sms"
+msgid "SMS"
+msgstr "SMS"
+
+msgctxt "SettingsVariants::csc_amocrm::send_method::viber"
+msgid "Viber"
+msgstr "Viber"
+
+msgctxt "SettingsVariants::csc_amocrm::send_method::omni"
+msgid "Omni"
+msgstr "Omni"
+
+msgctxt "SettingsOptions::csc_amocrm::send_conditions"
+msgid "Send message if"
+msgstr "Отправить сообщение если"
+
+msgctxt "SettingsOptions::csc_amocrm::new_user_registered"
+msgid "New user registered"
+msgstr "Зарегистрирован новый пользователь"
+
+msgctxt "SettingsOptions::csc_amocrm::stock_less_zero"
+msgid "Stock less zero"
+msgstr "Количество товара в наличии меньше нуля"
+
+msgctxt "SettingsOptions::csc_amocrm::new_order"
+msgid "New order is placed"
+msgstr "Размещен новый заказ"
+
+msgctxt "SettingsOptions::csc_amocrm::order_updated"
+msgid "Order has ben updated"
+msgstr "Заказ был обновлен"
+
+msgctxt "SettingsOptions::csc_amocrm::order_total_more_than"
+msgid "Send just if order total exceeds"
+msgstr "Отправлять только если сумма заказа превышает"
+
+msgctxt "SettingsOptions::csc_amocrm::shippings_condition"
+msgid "Send just if one of the following shipping methods is selected"
+msgstr "Отправлять только если выбран один из следующих способов доставки"
+
+msgctxt "SettingsOptions::csc_amocrm::order_status_condition"
+msgid "Send just if order status is one of the following"
+msgstr "Отправлять только если статус заказа один из следующих"
+
+msgctxt "SettingsOptions::csc_amocrm::sms_content"
+msgid "SMS Content"
+msgstr "Содержание SMS"
+
+msgctxt "SettingsOptions::csc_amocrm::include_payment_info"
+msgid "Include payment info"
+msgstr "Добавить информацию об оплате"
+
+msgctxt "SettingsOptions::csc_amocrm::include_customer_email"
+msgid "Include customer e-mail"
+msgstr "Добавить эл. почту покупателя"
+
+msgctxt "SettingsSections::csc_amocrm::customer_notifications"
+msgid "Customer Notifications"
+msgstr "Уведомления Покупателя"
+
+msgctxt "SettingsOptions::csc_amocrm::phone_field"
+msgid "Customer phone field"
+msgstr "Поле телефона покупателя"
+
+msgctxt "SettingsVariants::csc_amocrm::phone_field::billing"
+msgid "Billing Phone"
+msgstr "Телефон оплаты"
+
+msgctxt "SettingsVariants::csc_amocrm::phone_field::shipping"
+msgid "Shipping Phone"
+msgstr "Телефон доставки"
+
+msgctxt "SettingsOptions::csc_amocrm::customer_order_updated"
+msgid "Order has ben updated"
+msgstr "Заказ был обновлен"
+
+msgctxt "SettingsOptions::csc_amocrm::customer_shippings_condition"
+msgid "Send just if one of the following shipping methods is selected"
+msgstr "Отправлять только если выбран один из следующих способов доставки"
+
+msgctxt "SettingsOptions::csc_amocrm::customer_order_status_condition"
+msgid "Send just if order status is one of the following"
+msgstr "Отправлять только если статус заказа один из следующих"
+
+msgctxt "SettingsOptions::csc_amocrm::customer_order_total_more_than"
+msgid "Send just if order total exceeds"
+msgstr "Отправлять только если сумма заказа превышает"
+
+msgctxt "Languages::send_messages"
+msgid "Send Message"
+msgstr "Отправка сообщений"
+
+msgctxt "Languages::sms"
+msgid "SMS"
+msgstr "SMS"
+
+msgctxt "Languages::viber"
+msgid "Viber"
+msgstr "Viber"
+
+msgctxt "Languages::omni"
+msgid "Omni"
+msgstr "Omni"
+
+msgctxt "Languages::sms_text"
+msgid "SMS Text"
+msgstr "Текст сообщения"
+
+msgctxt "Languages::send_time"
+msgid "Send Time"
+msgstr "Время отправки"
+
+msgctxt "Languages::phone_numbers"
+msgid "Phone Numbers"
+msgstr "Номера телефонов"
+
+msgctxt "Languages::phone_numbers_tip"
+msgid "Divide by ,"
+msgstr "Через запятую"
+
+msgctxt "Languages::send_user_groups"
+msgid "Send to user groups"
+msgstr "Отправить группам пользователей"
+
+msgctxt "Languages::order_date_range"
+msgid "Send to customers, that ordered in"
+msgstr "Отправить клиентам, оформившим заказ за период"
+
+msgctxt "Languages::order_date_range_tip"
+msgid "Adv: Select dates that are boundary to the period. For ex. to send message to customers, that made an order 15 Sep 2013, you should select period from 14.09.2012 to 16.09.2013"
+msgstr "Совет: Выберите даты таким образом, чтобы они являлись границами
+периода. Например для отправки сообщения клиентам, сделавшим заказ 15 сентября 2013 года, необходимо задать период с 14.09.2013 до 16.09.2013"
+
+msgctxt "Languages::delivery_status"
+msgid "Delivery Status"
+msgstr "Статус доставки"
+
+msgctxt "Languages::button_url"
+msgid "Button URL"
+msgstr "URL Кнопки"
+
+msgctxt "Languages::button_label"
+msgid "Button Label"
+msgstr "Надпись кнопки"
+
+msgctxt "Languages::image_url"
+msgid "Image URL"
+msgstr "Ссылка на изображение"
+
+msgctxt "Languages::instant"
+msgid "Instant"
+msgstr "Мгновенно"
+
+msgctxt "Languages::lazy"
+msgid "Lazy"
+msgstr "Отложенный"
+
+msgctxt "Languages::messages_report"
+msgid "Messages Repost"
+msgstr "Отчет по отправленным сообщениям"
+
+msgctxt "Languages::messages_report"
+msgid "Messages Repost"
+msgstr "Отчет по отправленным сообщениям"
+
+msgctxt "Languages::sender_name"
+msgid "Sender Name"
+msgstr "Имя Отправителя"
+
+msgctxt "Languages::recepient"
+msgid "Recepient"
+msgstr "Получатель"
+
+msgctxt "Languages::delivery_start"
+msgid "Delivery Start"
+msgstr "Начало отправки"
+
+msgctxt "Languages::change_date"
+msgid "Change Date"
+msgstr "Дата изменений"
+
+msgctxt "Languages::message_text"
+msgid "Message Text"
+msgstr "Текст сообщения"
+
+msgctxt "Languages::order_id"
+msgid "Order ID"
+msgstr "ID Заказа"
+
+msgctxt "Languages::event"
+msgid "Event"
+msgstr "Событие"
+
+msgctxt "Languages::result"
+msgid "Result"
+msgstr "Результат"
+
+msgctxt "SettingsSections::csc_amocrm::feedback"
+msgid "Feedback"
+msgstr "Обратная связь"
+
+msgctxt "SettingsSections::csc_amocrm::help"
+msgid "Help"
+msgstr "Помощь"
+
+msgctxt "Languages::amocrm_help"
+msgid "Help me!!!"
+msgstr "Help me!!!111"
+
+msgctxt "Languages::amocrm_vars"
+msgid "Here you can use vars for events"
+msgstr "В этом разделе можно установить шаблон для отправки сообщений
+при наступлении события, где"
+
+msgctxt "Languages::equals_order_id"
+msgid "equals Order ID"
+msgstr "равен номеру заказа"
+
+msgctxt "Languages::equals_order_total"
+msgid "equals_order_total"
+msgstr "равен сумме заказа"
+
+msgctxt "Languages::equals_user_name"
+msgid "equals user name"
+msgstr "равен имени пользователя"
+
+msgctxt "Languages::equals_user_last_name"
+msgid "equals user last name"
+msgstr "равен фамилии пользователя"
+
+msgctxt "Languages::equals_user_email"
+msgid "equals user email"
+msgstr "равен E-Mail покупалетя"
+
+msgctxt "Languages::equals_shipping_country"
+msgid "equals shipping country"
+msgstr "равен стране доставки"
+
+msgctxt "Languages::equals_shipping_address"
+msgid "equals shipping address"
+msgstr "равен адресу доставки"
+
+msgctxt "Languages::equals_shipping_city"
+msgid "equals shipping city"
+msgstr "равен городу доставки"
+
+msgctxt "Languages::equals_shipping_state"
+msgid "equals shipping state"
+msgstr "равен области (району) доставки"
