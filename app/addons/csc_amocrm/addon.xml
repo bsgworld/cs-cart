@@ -33,7 +33,7 @@
     					<type>input</type>
     				</item>
     				<item id="send_method">
-    					<type>multiple checkboxes</type>
+    					<type>radio</type>
     					<variants>
     						<item id="sms"></item>
     						<item id="viber"></item>
