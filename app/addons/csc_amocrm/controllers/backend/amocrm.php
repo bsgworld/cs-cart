@@ -54,7 +54,9 @@ else
 	}
 	if ($mode == 'refresh_balance')
 	{
-		Registry::get('view')->assign('balance', 300);
+		$balance = fn_get_amocrm_balance();
+
+		Registry::get('view')->assign('balance', $balance);
 		Registry::get('view')->display('addons/csc_amocrm/components/balance_info.tpl');
 
 		exit;

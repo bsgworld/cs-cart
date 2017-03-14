@@ -1,5 +1,5 @@
 <?php
-
+use Tygh\Registry;
 require_once 'BSG/SmsApiClient.php';
 require_once 'BSG/HLRApiClient.php';
 require_once 'BSG/ViberApiClient.php';
@@ -11,7 +11,8 @@ class BSG
     private $tariff;
     private $viberSender;
 
-    public function __construct($apiKey, $sender = null, $viberSender = null, $tariff = null) {
+    public function __construct($apiKey = null, $sender = null, $viberSender = null, $tariff = null) {
+        $apiKey = Registry::get('addons.csc_amocrm.api_key');
         $this->apiKey = $apiKey;
         $this->sender = $sender;
         $this->tariff = $tariff;

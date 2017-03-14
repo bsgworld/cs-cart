@@ -7,3 +7,5 @@ fn_register_hooks(
 	'place_order',
 	'change_order_status'
 );
+
+require_once('app/addons/csc_amocrm/lib/BSG.php');

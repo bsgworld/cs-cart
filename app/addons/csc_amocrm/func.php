@@ -2,15 +2,24 @@
 use Tygh\Registry;
 if (!defined('BOOTSTRAP')) { die('Access denied'); }
 
+function fn_get_amocrm_balance()
+{
+	$bsg = new BSG();
+	$balance = $bsg->getSMSClient()->getBalance();
+	
+	return $balance['limit'] ? $balance['limit'] : 0;
+}
+
 function fn_csc_amocrm_account_info()
 {
+	$balance = fn_get_amocrm_balance();
 	return '
 	<div>
 		<a href="https://www.amocrm.ru/">' . __("register") . '</a>
 		<a href="https://www.amocrm.ru/">' . __("account") . '</a>
 		<a href="https://www.amocrm.ru/">' . __("forgot_password_question") . '</a>
 		<div id="balance_info">
-			'. __("balance") . ': 100р.
+			'. __("balance") . ': ' . $balance . 'р.
 		<!--balance_info--></div>
 		<a class="btn" onclick="Tygh.$.ceAjax(\'request\', \'' . fn_url('amocrm.refresh_balance') . '\', {result_ids: \'balance_info\'});">' . __("update") . '</a>
 	</div>
@@ -85,11 +94,17 @@ function fn_settings_variants_addons_csc_amocrm_customer_order_status_condition(
     return $result;
 }
 
+function fn_send_amocrm_message($params)
+{
+
+}
+
 function fn_csc_amocrm_update_profile($action, $user_data, $current_user_data)
 {
 	if ($action == 'add' && $user_data['user_type'] == "C" && Registry::get('addons.csc_amocrm.new_user_registered') == "Y")
 	{
-		fn_set_notification('N', '', 'Смс админу о новом пользователе');
+		//сообщенька админу о новом пользователе
+		$res = fn_send_amocrm_message($user_data);
 	}
 }
 
