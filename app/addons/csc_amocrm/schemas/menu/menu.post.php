@@ -12,7 +12,7 @@ $schema['central']['website']['items']['messages_report'] = array(
     'attrs' => array(
         'class'=>'is-addon'
     ),
-    'href' => 'amocrm.report',
+    'href' => 'amocrm.log',
     'position' => 901
 );
 

@@ -1,24 +1,27 @@
 <?php
+use Tygh\Registry;
 define('AREA', 'A');
 require ('init.php');
 
-$schedule = db_get_array('select * from ?:amocrm_messages_schedule where send_time <= ?i', time());
+if (!$_REQUEST['cron_pass'] || $_REQUEST['cron_pass'] != Registry::get('addons.csc_amocrm.cron_pass')) die('Access denied');
+
+$schedule = db_get_hash_array('select * from ?:amocrm_messages_schedule where send_time <= ?i', 'schedule_id', time());
 
 $sms_data = array();
 foreach($schedule as $key => $data)
 {
 	$phones = explode(',', $data['phones']);
-	foreach($phones as $_key => $phone)
-	{
-		$sms_data []= array(
-			'msisdn' => trim($phone),
-			'body' => $data['body'],
-			'reference' => 'successSendM' . (string)time().$key.$_key,
-			'send_method' => $data['send_method']
-		);
-	}
+	$params = array(
+		'phones' => $phones,
+		'body' => $data['body'],
+		'send_method' => $data['send_method'],
+		'event' => 'scheduled_message'
+	);
+	$res = fn_send_amocrm_message($params);
 }
 
 $res = fn_send_amocrm_message($params);
+
+db_query('delete from ?:amocrm_messages_schedule where schedule_id in (?n)', array_keys($schedule));
 
 echo 'done';

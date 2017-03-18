@@ -7,6 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 	if ($mode == 'check_message')
 	{
 		if ($_REQUEST['phone_numbers']) $phones = explode(',', $_REQUEST['phone_numbers']);
+		if ($phones == '') $phones = array();
 		
 		$phone_field_prefix = Registry::get('addons.csc_amocrm.phone_field' == 'billing') ? 'b_' : 's_';
 		$user_groups_phones = db_get_fields('select ' . $phone_field_prefix . 'phone from ?:user_profiles where user_id in (select user_id from ?:usergroup_links where usergroup_id in (?n) and status = "A")', $_REQUEST['user_groups']);
@@ -23,14 +24,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			'phones' => $phones,
 			'mode' => 'test',
 			'body' => $_REQUEST['sms_text'],
-			'send_method' => $_REQUEST['send_method']
+			'send_method' => $_REQUEST['send_method'],
+			'event' => 'instant_message'
 		);
 		$res = fn_send_amocrm_message($params);
-
+		$total_price = $res['total_price'] ? $res['total_price'] : $res['result']['price'];
 		$_SESSION['message_params'] = $params;
-
 		Registry::get('view')->assign('total_numbers', sizeof($phones));
-		Registry::get('view')->assign('total_cost', $res['total_price']);
+		Registry::get('view')->assign('total_cost', $total_price);
 		$msg = Registry::get('view')->fetch('addons/csc_amocrm/components/accept_message_send.tpl');
 		fn_set_notification('I', __("accept_message_send"), $msg);
 		exit;
@@ -45,9 +46,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 }
 else
 {
-	if ($mode == 'messages_report')
+	if ($mode == 'log')
 	{
+		$items_per_page = $_REQUEST['items_per_page'] ? $_REQUEST['items_per_page'] : 10;
+		$page = $_REQUEST['page'] ? $_REQUEST['page'] : 1;
+		$total_msg = db_get_field('select count(message_id) from ?:amocrm_messages_log');
 
+		$limit = db_paginate($page, $items_per_page, $total_msg);
+
+		$messages = db_get_array("select * from ?:amocrm_messages_log $limit");
+
+		$search['total_items'] = $total_msg;
+		$search['items_per_page'] = $items_per_page;
+		$search['page'] = $page;
+
+		Registry::get('view')->assign('messages', $messages);
+		Registry::get('view')->assign('search', $search);
 	}
 	
 	if ($mode == 'send_message')

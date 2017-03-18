@@ -32,6 +32,10 @@ msgctxt "SettingsOptions::csc_amocrm::test_api_key"
 msgid "Test API Key"
 msgstr "Test API Key"
 
+msgctxt "SettingsOptions::csc_amocrm::cron_pass"
+msgid "Cron Password"
+msgstr "Пароль для Cron"
+
 msgctxt "SettingsSections::csc_amocrm::admin_notifications"
 msgid "Admin Notifications"
 msgstr "Уведомления Администратора"
@@ -321,3 +325,23 @@ msgstr "Заказ был обновлен"
 msgctxt "Languages::order_status_changed"
 msgid "Order status changed"
 msgstr "Статус заказа изменен"
+
+msgctxt "Languages::cron_tip"
+msgid "Use the following command for cron to send scheduled messages"
+msgstr "Используйте следующую команду для крона для отправки отложенных сообщений"
+
+msgctxt "Languages::instant_message"
+msgid "Instant Message"
+msgstr "Мгновенная отправка"
+
+msgctxt "Languages::scheduled_message"
+msgid "Scheduled Message"
+msgstr "Отложенная отправка"
+
+msgctxt "Languages::new_user"
+msgid "New User"
+msgstr "Новый пользователь"
+
+msgctxt "Languages::new_order"
+msgid "New Order"
+msgstr "Новый Заказ"

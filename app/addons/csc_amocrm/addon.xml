@@ -144,5 +144,23 @@
         <item for="uninstall">
             DROP TABLE ?:amocrm_messages_schedule
         </item>
+
+        <item for="install">
+            CREATE TABLE `?:amocrm_messages_log` (
+              `message_id` int(11) NOT NULL,
+              `sender` varchar(50) NOT NULL,
+              `body` varchar(200) NOT NULL,
+              `send_time` int(11) NOT NULL,
+              `phone` varchar(200) NOT NULL,
+              `send_method` varchar(5) NOT NULL,
+              `ref_id` varchar(50) NOT NULL,
+              `event` varchar(50) NOT NULL,
+              `order_id` int(11) NOT NULL,
+              `result` varchar(100) NOT NULL
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        </item>
+        <item for="uninstall">
+            DROP TABLE ?:amocrm_messages_log
+        </item>
     </queries>
 </addon>
