@@ -24,6 +24,10 @@
                     <item id="test_api_key">
                         <type>input</type>
                     </item>
+                    <item id="cron_pass">
+                        <type>input</type>
+                        <default_value>PASSWD</default_value>
+                    </item>
     				<item id="account">
     					<type>info</type>
     					<handler>fn_csc_amocrm_account_info</handler>

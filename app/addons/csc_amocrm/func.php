@@ -102,6 +102,7 @@ function fn_send_amocrm_message($params)
 	else $bsg = new BSG('test', null, null, 'test');
 	$addon = Registry::get('addons.csc_amocrm');
 	$send_method = $params['send_method'] ? $params['send_method'] : $addon['send_method'];
+	
 	if ($params['recipient'] == 'admin') $phones = explode(',', $addon['admin_phones']);
 	if ($params['recipient'] == 'customer')
 	{
