@@ -21,6 +21,9 @@
     				<item id="api_key">
     					<type>input</type>
     				</item>
+                    <item id="test_api_key">
+                        <type>input</type>
+                    </item>
     				<item id="account">
     					<type>info</type>
     					<handler>fn_csc_amocrm_account_info</handler>
@@ -33,12 +36,13 @@
     					<type>input</type>
     				</item>
     				<item id="send_method">
-    					<type>radio</type>
+    					<type>radiogroup</type>
     					<variants>
     						<item id="sms"></item>
     						<item id="viber"></item>
     						<item id="omni"></item>
     					</variants>
+                        <default_value>sms</default_value>
     				</item>
     				<item id="send_conditions">
                         <type>header</type>

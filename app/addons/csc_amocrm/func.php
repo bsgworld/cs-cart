@@ -2,6 +2,8 @@
 use Tygh\Registry;
 if (!defined('BOOTSTRAP')) { die('Access denied'); }
 
+require_once('app/addons/csc_amocrm/lib/BSG.php');
+
 function fn_get_amocrm_balance()
 {
 	$bsg = new BSG();
@@ -15,11 +17,11 @@ function fn_csc_amocrm_account_info()
 	$balance = fn_get_amocrm_balance();
 	return '
 	<div>
-		<a href="https://www.amocrm.ru/">' . __("register") . '</a>
-		<a href="https://www.amocrm.ru/">' . __("account") . '</a>
-		<a href="https://www.amocrm.ru/">' . __("forgot_password_question") . '</a>
+		<a href="https://www.amocrm.ru/" target="_blank">' . __("register") . '</a>
+		<a href="https://www.amocrm.ru/" target="_blank">' . __("account") . '</a>
+		<a href="https://www.amocrm.ru/" target="_blank">' . __("forgot_password_question") . '</a>
 		<div id="balance_info">
-			'. __("balance") . ': ' . $balance . 'р.
+			'. __("balance") . ': ' . $balance . ' EUR.
 		<!--balance_info--></div>
 		<a class="btn" onclick="Tygh.$.ceAjax(\'request\', \'' . fn_url('amocrm.refresh_balance') . '\', {result_ids: \'balance_info\'});">' . __("update") . '</a>
 	</div>
@@ -96,7 +98,28 @@ function fn_settings_variants_addons_csc_amocrm_customer_order_status_condition(
 
 function fn_send_amocrm_message($params)
 {
+	$bsg = new BSG(Registry::get('settings.Company.company_name'));
+	$addon = Registry::get('addons.csc_amocrm');
+	if ($params['recipient'] == 'admin') $phones = explode(',', $addon['admin_phones']);
+	else $phones = $params['recipient'];
 
+	if ($addon['send_method'] == 'sms')
+	{
+		$smsClient = $bsg->getSmsClient();
+		$sms_data = array();
+		foreach($phones as $key => $phone)
+		{
+			$sms_data []= array(
+				'msisdn' => trim($phone),
+				'body' => $params['body'],
+				'reference' => 'successSendM' . (string)time().$key
+			);
+		}
+		$res = $smsClient->sendSmsMulti($sms_data);
+		//fn_print_die($sms_data, $res);
+	}
+
+	return $res;
 }
 
 function fn_csc_amocrm_update_profile($action, $user_data, $current_user_data)
@@ -104,7 +127,12 @@ function fn_csc_amocrm_update_profile($action, $user_data, $current_user_data)
 	if ($action == 'add' && $user_data['user_type'] == "C" && Registry::get('addons.csc_amocrm.new_user_registered') == "Y")
 	{
 		//сообщенька админу о новом пользователе
-		$res = fn_send_amocrm_message($user_data);
+		$params = array(
+			'recipient' => 'admin',
+			'body' => __("new_user_registered"). '. ' . 'UserID: ' . $user_data['user_id'],
+			'user_data' => $user_data
+		);
+		$res = fn_send_amocrm_message($params);
 	}
 }
 
@@ -113,7 +141,13 @@ function fn_csc_amocrm_update_product_amount($new_amount, $product_id, $cart_id,
 	$product_data = fn_get_product_data($product_id, $_SESSION['auth']);
 	if ($new_amount < 0 && Registry::get('addons.csc_amocrm.stock_less_zero') == "Y")
 	{
-		fn_set_notification('N', '', 'Смс админу колво товара ' . $product_data['product'] . ' меньше нуля');
+		//сообщенька админу об остатке меньше нуля
+		$params = array(
+			'recipient' => 'admin',
+			'body' => __("stock_less_zero"). '. ' . $product_data['product'],
+			'user_data' => $user_data
+		);
+		$res = fn_send_amocrm_message($params);
 	}
 }
 

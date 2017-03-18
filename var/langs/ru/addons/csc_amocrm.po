@@ -28,6 +28,10 @@ msgctxt "SettingsOptions::csc_amocrm::api_key"
 msgid "API Key"
 msgstr "API Key"
 
+msgctxt "SettingsOptions::csc_amocrm::test_api_key"
+msgid "API Key"
+msgstr "API Key"
+
 msgctxt "SettingsSections::csc_amocrm::admin_notifications"
 msgid "Admin Notifications"
 msgstr "Уведомления Администратора"
@@ -301,3 +305,11 @@ msgstr "Количество сообщений для отправки"
 msgctxt "Languages::total_sms_cost"
 msgid "total sms cost"
 msgstr "Общая стоимость сообщений"
+
+msgctxt "Languages::new_user_registered"
+msgid "New user Registered"
+msgstr "Зарегистрирован новый пользователь"
+
+msgctxt "Languages::stock_less_zero"
+msgid "Stock less zero"
+msgstr "Остаток товара меньше нуля"
