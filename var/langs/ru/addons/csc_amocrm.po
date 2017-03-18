@@ -25,8 +25,8 @@ msgid "General"
 msgstr "Общие"
 
 msgctxt "SettingsOptions::csc_amocrm::api_key"
-msgid "API Key"
-msgstr "API Key"
+msgid "Live API Key"
+msgstr "Live API Key"
 
 msgctxt "SettingsOptions::csc_amocrm::test_api_key"
 msgid "Test API Key"
