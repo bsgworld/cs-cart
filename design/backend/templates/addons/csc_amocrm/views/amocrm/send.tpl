@@ -13,7 +13,7 @@
 				<div class="control-group">
 					<label for="send_time" class="control-label">{__("send_time")}</label>
 					<div class="controls">
-						{__("instant")} <input type="radio" name="send_time_type" value="instant">
+						{__("instant")} <input type="radio" name="send_time_type" value="instant" checked>
 						&nbsp;
 						{__("lazy")} <input type="radio" name="send_time_type" value="lazy">
 						<br>
@@ -45,7 +45,7 @@
 				<div class="control-group">
 					<label for="user_groups" class="control-label">{__("send_user_groups")}</label>
 					<div class="controls">
-						<select multiple>
+						<select name="user_groups" multiple>
 							{assign var="user_groups" value=""|fn_get_usergroups}
 							{foreach from=$user_groups item="user_group"}
 								<option value="{$user_group.usergroup_id}">{$user_group.usergroup}</option>
@@ -77,9 +77,9 @@
 				
 				<br><br>
 				
-				<div clss="controls">
+				{*<div clss="controls">
 					<b>{__("delivery_status")}</b>: 
-				</div>
+				</div>*}
 			</form>
 		</div>
 
@@ -149,7 +149,7 @@
 				<div class="control-group">
 					<label for="user_groups" class="control-label">{__("send_user_groups")}</label>
 					<div class="controls">
-						<select multiple>
+						<select name="user_groups" multiple>
 							{assign var="user_groups" value=""|fn_get_usergroups}
 							{foreach from=$user_groups item="user_group"}
 								<option value="{$user_group.usergroup_id}">{$user_group.usergroup}</option>
@@ -181,9 +181,9 @@
 
 				<br><br>
 
-				<div clss="controls">
+				{*<div clss="controls">
 					<b>{__("delivery_status")}</b>: 
-				</div>
+				</div>*}
 			</form>
 		</div>
 

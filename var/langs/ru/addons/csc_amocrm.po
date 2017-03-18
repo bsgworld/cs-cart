@@ -29,8 +29,8 @@ msgid "API Key"
 msgstr "API Key"
 
 msgctxt "SettingsOptions::csc_amocrm::test_api_key"
-msgid "API Key"
-msgstr "API Key"
+msgid "Test API Key"
+msgstr "Test API Key"
 
 msgctxt "SettingsSections::csc_amocrm::admin_notifications"
 msgid "Admin Notifications"
@@ -313,3 +313,11 @@ msgstr "Зарегистрирован новый пользователь"
 msgctxt "Languages::stock_less_zero"
 msgid "Stock less zero"
 msgstr "Остаток товара меньше нуля"
+
+msgctxt "Languages::order_updated"
+msgid "Order has been updates"
+msgstr "Заказ был обновлен"
+
+msgctxt "Languages::order_status_changed"
+msgid "Order status changed"
+msgstr "Статус заказа изменен"

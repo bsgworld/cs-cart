@@ -11,8 +11,8 @@ class BSG
     private $tariff;
     private $viberSender;
 
-    public function __construct($sender = null, $viberSender = null, $tariff = null) {
-        $apiKey = Registry::get('addons.csc_amocrm.api_key');
+    public function __construct($sender = null, $viberSender = null, $tariff = null, $mode = 'live') {
+        $apiKey = $mode == 'live' ? Registry::get('addons.csc_amocrm.api_key') : Registry::get('addons.csc_amocrm.test_api_key');
         $this->apiKey = $apiKey;
         $this->sender = $sender;
         $this->tariff = $tariff;

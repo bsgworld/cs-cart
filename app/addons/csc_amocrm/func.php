@@ -98,25 +98,33 @@ function fn_settings_variants_addons_csc_amocrm_customer_order_status_condition(
 
 function fn_send_amocrm_message($params)
 {
-	$bsg = new BSG(Registry::get('settings.Company.company_name'));
+	if ($params['mode'] != 'test') $bsg = new BSG(Registry::get('settings.Company.company_name'));
+	else $bsg = new BSG('test', null, null, 'test');
 	$addon = Registry::get('addons.csc_amocrm');
+	$send_method = $params['send_method'] ? $params['send_method'] : $addon['send_method'];
 	if ($params['recipient'] == 'admin') $phones = explode(',', $addon['admin_phones']);
-	else $phones = $params['recipient'];
-
-	if ($addon['send_method'] == 'sms')
+	if ($params['recipient'] == 'customer')
+	{
+		if ($addon['phone_field'] == 'billing') $phones []= $params['order_data']['b_phone'];
+		elseif ($addon['phone_field'] == 'shipping') $phones []= $params['order_data']['s_phone'];
+	}
+	if ($params['phones']) $phones = $params['phones'];
+	
+	if ($send_method == 'sms')
 	{
 		$smsClient = $bsg->getSmsClient();
 		$sms_data = array();
 		foreach($phones as $key => $phone)
 		{
+			if ($phone == '') continue;
 			$sms_data []= array(
 				'msisdn' => trim($phone),
 				'body' => $params['body'],
 				'reference' => 'successSendM' . (string)time().$key
 			);
 		}
+		
 		$res = $smsClient->sendSmsMulti($sms_data);
-		//fn_print_die($sms_data, $res);
 	}
 
 	return $res;
@@ -144,8 +152,7 @@ function fn_csc_amocrm_update_product_amount($new_amount, $product_id, $cart_id,
 		//сообщенька админу об остатке меньше нуля
 		$params = array(
 			'recipient' => 'admin',
-			'body' => __("stock_less_zero"). '. ' . $product_data['product'],
-			'user_data' => $user_data
+			'body' => __("stock_less_zero"). '. ' . $product_data['product']
 		);
 		$res = fn_send_amocrm_message($params);
 	}
@@ -153,39 +160,124 @@ function fn_csc_amocrm_update_product_amount($new_amount, $product_id, $cart_id,
 
 function fn_csc_amocrm_place_order($order_id, $action, $order_status, $cart, $auth)
 {
+	//админское
 	$min_order_total = Registry::get('addons.csc_amocrm.order_total_more_than');
 	$order_data = fn_get_order_info($order_id);
 
 	$available_shippings = Registry::get('addons.csc_amocrm.shippings_condition');
 	$available_statuses = Registry::get('addons.csc_amocrm.order_status_condition');
-	if ($order_data['total'] > $min_order_total && (empty($available_shippings) || isset($available_shippings['N']) || $available_shippings[$order_data['shipping_ids']] == "Y") && (empty($available_statuses) || isset($available_statuses['N']) || $available_statuses[$_REQUEST['order_status']] == "Y"))
+	if ($order_data['total'] > $min_order_total && (empty($available_shippings) || isset($available_shippings['N']) || $available_shippings[$order_data['shipping_ids']] == "Y") && (empty($available_statuses) || isset($available_statuses['N']) || $available_statuses[$order_data['status']] == "Y" || $order_data['status'] == 'N'))
 	{
 		if ($order_id && Registry::get('addons.csc_amocrm.stock_less_zero') == "Y" && Registry::get('runtime.mode') == 'place_order' && $action != 'save')
 		{
-			fn_set_notification('N', '', 'СМС админа новый заказ');
+			//сообщенька админу новый заказ
+			$params = array(
+				'recipient' => 'admin',
+				'body' => __("order_placed"). '. OrderID: ' . $order_id
+			);
+			if (Registry::get('addons.csc_amocrm.include_payment_info'))
+			{
+				$params['body'] .= '. ' . __("payment_information") . ': ' . $order_data['payment_method']['payment'];
+			}
+			if (Registry::get('addons.csc_amocrm.include_customer_email'))
+			{
+				$params['body'] .= '. ' . __("email") . ': ' . $order_data['email'];
+			}
+			$res = fn_send_amocrm_message($params);
 		}
 
-		if ($action == "save" && Registry::get('addons.csc_amocrm.order_updated') == 'Y')
+		if ($action == "save")
 		{
-			fn_set_notification('N', '', 'СМС админа заказ обновлен');
+			if (Registry::get('addons.csc_amocrm.order_updated') == 'Y')
+			{
+				//сообщенька админу заказ обновлен
+				$params = array(
+					'recipient' => 'admin',
+					'body' => __("order_updated"). '. OrderID: ' . $order_id
+				);
+				if (Registry::get('addons.csc_amocrm.include_payment_info'))
+				{
+					$params['body'] .= '. ' . __("payment_information") . ': ' . $order_data['payment_method']['payment'];
+				}
+				if (Registry::get('addons.csc_amocrm.include_customer_email'))
+				{
+					$params['body'] .= '. ' . __("email") . ': ' . $order_data['email'];
+				}
+				$res = fn_send_amocrm_message($params);
+			}
+		}
+	}
+
+	//кастомерское
+	$min_order_total = Registry::get('addons.csc_amocrm.customer_order_total_more_than');
+
+	$available_shippings = Registry::get('addons.csc_amocrm.customer_shippings_condition');
+	$available_statuses = Registry::get('addons.csc_amocrm.customer_order_status_condition');
+	if ($order_data['total'] >= $min_order_total && (empty($available_shippings) || isset($available_shippings['N']) || $available_shippings[$order_data['shipping_ids']] == "Y") && (empty($available_statuses) || isset($available_statuses['N']) || $available_statuses[$order_data['status']] == "Y" || $order_data['status'] == 'N'))
+	{
+		if ($action == "save")
+		{
+			if (Registry::get('addons.csc_amocrm.customer_order_updated') == 'Y')
+			{
+				//сообщенька кастомеру заказ обновлен
+				$params = array(
+					'recipient' => 'customer',
+					'body' => __("order_updated"). '. OrderID: ' . $order_id,
+					'order_data' => $order_data
+				);
+				if (Registry::get('addons.csc_amocrm.include_payment_info'))
+				{
+					$params['body'] .= '. ' . __("payment_information") . ': ' . $order_data['payment_method']['payment'];
+				}
+				if (Registry::get('addons.csc_amocrm.include_customer_email'))
+				{
+					$params['body'] .= '. ' . __("email") . ': ' . $order_data['email'];
+				}
+				$res = fn_send_amocrm_message($params);
+			}
 		}
 	}
 }
 
 function fn_csc_amocrm_change_order_status($status_to, $status_from, $order_info, $force_notification, $order_statuses, $place_order)
 {
-	if ($place_order == false)
+	//админское
+	$available_statuses = Registry::get('addons.csc_amocrm.order_status_condition');
+	if ($place_order == false && $status_to != $status_from && $status_to != 'N' && (empty($available_statuses) || isset($available_statuses['N']) || $available_statuses[$status_to] == "Y"))
 	{
-		$message = db_get_field('select d.amocrm_msg from ?:statuses s inner join ?:status_descriptions d on s.status_id = d.status_id where status = ?s and lang_code = ?s', $status_to, "ru");
+		$message = db_get_field('select d.amocrm_msg from ?:statuses s inner join ?:status_descriptions d on s.status_id = d.status_id where status = ?s and lang_code = ?s and type = "O"', $status_to, DESCR_SL);
 		$content = str_replace(array('%ORDER_ID%', '%AMOUNT%', '%NAME%', '%LAST_NAME%', '%USER_EMAIL%', '%COUNTRY%', '%ADDRESS%', '%CITY%', '%STATE%'), array($order_info['order_id'], $order_info['total'], $order_info['firstname'], $order_info['lastname'], $order_info['email'], $order_info['s_country_descr'], $order_info['s_address'], $order_info['s_city'], $order_info['s_state_descr']), $message);
+		//fn_print_die($message, $content);
+		$status = db_get_field('select description from ?:statuses s inner join ?:status_descriptions d on s.status_id = d.status_id where status = ?s and lang_code = ?s and type="O"', $status_to, DESCR_SL);
+		
+		//сообщеньк админу о смене статуса заказа
 		if (Registry::get('addons.csc_amocrm.order_updated') == 'Y')
 		{
-			fn_set_notification('N', '', "СМС админу о смене статуса\n" . $content);
+			$params = array(
+				'recipient' => 'admin',
+				'body' => __("order_status_changed") . '. ' . $content
+			);
+			$res = fn_send_amocrm_message($params);
 		}
+	}
 
+	//кастомерское
+	$available_statuses = Registry::get('addons.csc_amocrm.customer_order_status_condition');
+	if ($place_order == false && $status_to != $status_from && $status_to != 'N' && (empty($available_statuses) || isset($available_statuses['N']) || $available_statuses[$status_to] == "Y"))
+	{
+		$message = db_get_field('select d.amocrm_msg from ?:statuses s inner join ?:status_descriptions d on s.status_id = d.status_id where status = ?s and lang_code = ?s and type = "O"', $status_to, DESCR_SL);
+		$content = str_replace(array('%ORDER_ID%', '%AMOUNT%', '%NAME%', '%LAST_NAME%', '%USER_EMAIL%', '%COUNTRY%', '%ADDRESS%', '%CITY%', '%STATE%'), array($order_info['order_id'], $order_info['total'], $order_info['firstname'], $order_info['lastname'], $order_info['email'], $order_info['s_country_descr'], $order_info['s_address'], $order_info['s_city'], $order_info['s_state_descr']), $message);
+		//fn_print_die($message, $content);
+		$status = db_get_field('select description from ?:statuses s inner join ?:status_descriptions d on s.status_id = d.status_id where status = ?s and lang_code = ?s and type="O"', $status_to, DESCR_SL);
 		if (Registry::get('addons.csc_amocrm.customer_order_updated') == 'Y')
 		{
-			fn_set_notification('N', '', "СМС покупателю о смене статуса\n" . $content);
+			//сообщенька кастомеру о смене статуса заказа
+			$params = array(
+				'recipient' => 'customer',
+				'body' => __("order_status_changed") . '. ' . $content,
+				'order_data' => $order_info
+			);
+			$res = fn_send_amocrm_message($params);
 		}
 	}
 }

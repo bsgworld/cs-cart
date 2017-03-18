@@ -133,5 +133,12 @@
         <item for="uninstall">
             ALTER TABLE `?:status_descriptions` DROP `amocrm_msg`;
         </item>
+
+        <item for="install">
+            CREATE TABLE `?:amocrm_messages_schedule` ( `schedule_id` INT NOT NULL AUTO_INCREMENT , `body` VARCHAR(200) NOT NULL , `send_time` INT NOT NULL , `phones` VARCHAR(200) NOT NULL, `send_method` VARCHAR(5) NOT NULL , PRIMARY KEY (`schedule_id`)) ENGINE = InnoDB;
+        </item>
+        <item for="uninstall">
+            DROP TABLE ?:amocrm_messages_schedule
+        </item>
     </queries>
 </addon>
