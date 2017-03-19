@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <addon scheme="3.0">
-    <id>csc_amocrm</id>
+    <id>csc_bsg_world</id>
     <version>1.0</version>
     <status>active</status>
 
@@ -30,7 +30,7 @@
                     </item>
     				<item id="account">
     					<type>info</type>
-    					<handler>fn_csc_amocrm_account_info</handler>
+    					<handler>fn_csc_bsg_world_account_info</handler>
     				</item>
     			</items>
     		</section>
@@ -115,7 +115,7 @@
                 <items>
                     <item id="feedback_form">
                         <type>info</type>
-                        <handler>fn_csc_amocrm_feedback_info</handler>
+                        <handler>fn_csc_bsg_world_feedback_info</handler>
                     </item>
                 </items>
             </section>
@@ -123,7 +123,7 @@
                 <items>
                     <item id="help">
                         <type>info</type>
-                        <handler>fn_csc_amocrm_help_info</handler>
+                        <handler>fn_csc_bsg_world_help_info</handler>
                     </item>
                 </items>
             </section>

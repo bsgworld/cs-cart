@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 		if ($_REQUEST['phone_numbers']) $phones = explode(',', $_REQUEST['phone_numbers']);
 		if ($phones == '') $phones = array();
 		
-		$phone_field_prefix = Registry::get('addons.csc_amocrm.phone_field' == 'billing') ? 'b_' : 's_';
+		$phone_field_prefix = Registry::get('addons.csc_bsg_world.phone_field' == 'billing') ? 'b_' : 's_';
 		$user_groups_phones = db_get_fields('select ' . $phone_field_prefix . 'phone from ?:user_profiles where user_id in (select user_id from ?:usergroup_links where usergroup_id in (?n) and status = "A")', $_REQUEST['user_groups']);
 
 		$picker_phones = db_get_fields('select ' . $phone_field_prefix . 'phone from ?:user_profiles where user_id in (?n)', $_REQUEST['users']);
@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 		$_SESSION['message_params'] = $params;
 		Registry::get('view')->assign('total_numbers', sizeof($phones));
 		Registry::get('view')->assign('total_cost', $total_price);
-		$msg = Registry::get('view')->fetch('addons/csc_amocrm/components/accept_message_send.tpl');
+		$msg = Registry::get('view')->fetch('addons/csc_bsg_world/components/accept_message_send.tpl');
 		fn_set_notification('I', __("accept_message_send"), $msg);
 		exit;
 	}
@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 	{
 		fn_set_notification('N', __("success"), __("feedback_has_been_sent"));
 
-		return array(CONTROLLER_STATUS_OK, 'addons.update?addon=csc_amocrm');
+		return array(CONTROLLER_STATUS_OK, 'addons.update?addon=csc_bsg_world');
 	}
 }
 else
@@ -111,7 +111,7 @@ else
 		$balance = fn_get_amocrm_balance();
 
 		Registry::get('view')->assign('balance', $balance);
-		Registry::get('view')->display('addons/csc_amocrm/components/balance_info.tpl');
+		Registry::get('view')->display('addons/csc_bsg_world/components/balance_info.tpl');
 
 		exit;
 	}
