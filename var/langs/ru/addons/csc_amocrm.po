@@ -343,5 +343,5 @@ msgid "New User"
 msgstr "Новый пользователь"
 
 msgctxt "Languages::new_order"
-msgid "New Order"
-msgstr "Новый Заказ"
+msgid "New order"
+msgstr "Новый заказ"

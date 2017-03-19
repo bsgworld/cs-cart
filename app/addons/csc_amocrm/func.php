@@ -100,7 +100,7 @@ function fn_settings_variants_addons_csc_amocrm_customer_order_status_condition(
 
 function fn_send_amocrm_message($params)
 {
-	if ($params['mode'] != 'test') $bsg = new BSG(Registry::get('settings.Company.company_name'));
+	if ($params['mode'] != 'test') $bsg = new BSG(Registry::get('settings.Company.company_name'), Registry::get('settings.Company.company_name'), 3);
 	else $bsg = new BSG('test', null, null, 'test');
 
 	$addon = Registry::get('addons.csc_amocrm');
@@ -159,6 +159,18 @@ function fn_send_amocrm_message($params)
 		{
 			db_query('update ?:amocrm_messages_log set result = ?s where ref_id = ?s', $res['errorDescription'], $res['reference']);
 		}
+	}
+	if ($send_method == 'viber')
+	{
+		$viberClient = $bsg->getViberClient();
+		foreach($phones as $key => $phone)
+		{
+			//формирование массива для отправки смс
+			if ($phone == '') continue;
+			$viberClient->addMessage([['msisdn' => $phone]], $params['body']);
+		}
+		$res = $viberClient->sendMessages();
+		fn_print_die($res);
 	}
 
 	return $res;
