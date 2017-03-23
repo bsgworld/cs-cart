@@ -98,10 +98,11 @@ function fn_settings_variants_addons_csc_bsg_world_customer_order_status_conditi
     return $result;
 }
 
+//я сначала думал что сервис называется amocrm поэтому название функции немного неправильное))
 function fn_send_amocrm_message($params)
 {
-	if ($params['mode'] != 'test') $bsg = new BSG(Registry::get('settings.Company.company_name'), Registry::get('settings.Company.company_name'), 3);
-	else $bsg = new BSG('test', null, null, 'test');
+	if ($params['mode'] != 'test') $bsg = new BSG(Registry::get('settings.Company.company_name'), 'BSG');
+	else $bsg = new BSG('test', 'BSG', null, 'test');
 
 	$addon = Registry::get('addons.csc_bsg_world');
 	
@@ -149,15 +150,20 @@ function fn_send_amocrm_message($params)
 
 		//запись в лог
 		if (!empty($log_data)) db_query('insert into ?:amocrm_messages_log ?m', $log_data);
+		//отсылаем смс
 		if (!empty($sms_data)) $res = $smsClient->sendSmsMulti($sms_data);
 		
+		//приведение массива к общему виду
 		if ($res['result'][0]) $result = $res['result'];
 		else $result[0] = $res['result'];
 
 		//запись результатов отправки по reference id
-		foreach($result as $res)
+		if ($params['mode'] != 'test')
 		{
-			db_query('update ?:amocrm_messages_log set result = ?s where ref_id = ?s', $res['errorDescription'], $res['reference']);
+			foreach($result as $res)
+			{
+				db_query('update ?:amocrm_messages_log set result = ?s where ref_id = ?s', $res['errorDescription'], $res['reference']);
+			}
 		}
 	}
 	if ($send_method == 'viber')
@@ -167,10 +173,45 @@ function fn_send_amocrm_message($params)
 		{
 			//формирование массива для отправки смс
 			if ($phone == '') continue;
-			$viberClient->addMessage([['msisdn' => $phone]], $params['body']);
+			$ref_id = 'successSendM' . (string)time().$key;
+			$to = array(
+				array(
+					'msisdn' => $phone,
+					'reference' => $ref_id
+				)
+			);
+			$options = array(
+				'img' => $params['image_url'],
+				'caption' => $params['button_label'],
+				'action' => $params['button_url']
+			);
+			$viberClient->addMessage($to, $params['body'], $options);
+
+			//формирование массива для лога
+			if ($params['mode'] != 'test')
+			{
+				$log_data []= array(
+					'sender' => Registry::get('settings.Company.company_name'),
+					'body' => $params['body'],
+					'send_time' => time(),
+					'phone' => $phone,
+					'send_method' => 'viber',
+					'ref_id' => $ref_id,
+					'event' => $params['event'],
+					'order_id' => $params['order_id'] ? $params['order_id'] : 0
+				);
+			}
 		}
+
+		//запись в лог
+		if (!empty($log_data)) db_query('insert into ?:amocrm_messages_log ?m', $log_data);
+
+		//отправка сообщенек
 		$res = $viberClient->sendMessages();
-		fn_print_die($res);
+		foreach($res['result'] as $result)
+		{
+			db_query('update ?:amocrm_messages_log set result = ?s where ref_id = ?s', $result['errorDescription'], $result['reference']);
+		}
 	}
 
 	return $res;
@@ -216,7 +257,7 @@ function fn_csc_bsg_world_place_order($order_id, $action, $order_status, $cart, 
 	$available_statuses = Registry::get('addons.csc_bsg_world.order_status_condition');
 	if ($order_data['total'] > $min_order_total && (empty($available_shippings) || isset($available_shippings['N']) || $available_shippings[$order_data['shipping_ids']] == "Y") && (empty($available_statuses) || isset($available_statuses['N']) || $available_statuses[$order_data['status']] == "Y" || $order_data['status'] == 'N'))
 	{
-		if ($order_id && Registry::get('addons.csc_bsg_world.stock_less_zero') == "Y" && Registry::get('runtime.mode') == 'place_order' && $action != 'save')
+		if ($order_id && Registry::get('runtime.mode') == 'place_order' && $action != 'save')
 		{
 			//сообщенька админу новый заказ
 			$params = array(

@@ -25,7 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			'mode' => 'test',
 			'body' => $_REQUEST['sms_text'],
 			'send_method' => $_REQUEST['send_method'],
-			'event' => 'instant_message'
+			'button_url' => $_REQUEST['button_url'],
+			'button_label' => $_REQUEST['button_label'],
+			'image_url' => $_REQUEST['image_url']
 		);
 		$res = fn_send_amocrm_message($params);
 		$total_price = $res['total_price'] ? $res['total_price'] : $res['result']['price'];
@@ -69,7 +71,6 @@ else
 		if ($_SESSION['message_params'])
 		{
 			$params = $_SESSION['message_params'];
-
 			if ($params['send_time_type'] == 'lazy')
 			{
 				unset($params['send_time_type']);
@@ -77,14 +78,18 @@ else
 				$params['phones'] = implode(',', $params['phones']);
 				db_query('insert into ?:amocrm_messages_schedule ?e', $params);
 			}
-
-			$params['mode'] = 'live';
-			$res = fn_send_amocrm_message($params);
+			else 
+			{
+				$params['mode'] = 'live';
+				$params['event'] = 'instant_message';
+				$res = fn_send_amocrm_message($params);
+			}
 
 			Registry::get('view')->assign('total_numbers', sizeof($_SESSION['message_params']['phones']));
 			unset($_SESSION['message_params']);
 		}
-		else fn_redirect('amocrm.send');
+		fn_set_notification('N', __("success"), __("messages_successfully_sent"));
+		fn_redirect('amocrm.send');
 	}
 
 	if ($mode == 'send')

@@ -15,7 +15,10 @@ foreach($schedule as $key => $data)
 		'phones' => $phones,
 		'body' => $data['body'],
 		'send_method' => $data['send_method'],
-		'event' => 'scheduled_message'
+		'event' => 'scheduled_message',
+		'button_url' => $data['button_url'],
+		'button_label' => $data['button_label'],
+		'image_url' => $data['image_url']
 	);
 	$res = fn_send_amocrm_message($params);
 }

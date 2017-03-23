@@ -139,7 +139,15 @@
         </item>
 
         <item for="install">
-            CREATE TABLE `?:amocrm_messages_schedule` ( `schedule_id` INT NOT NULL AUTO_INCREMENT , `body` VARCHAR(200) NOT NULL , `send_time` INT NOT NULL , `phones` VARCHAR(200) NOT NULL, `send_method` VARCHAR(5) NOT NULL , PRIMARY KEY (`schedule_id`)) ENGINE = InnoDB;
+            CREATE TABLE `?:amocrm_messages_schedule` ( 
+                `schedule_id` INT NOT NULL AUTO_INCREMENT , 
+                `body` VARCHAR(200) NOT NULL , 
+                `send_time` INT NOT NULL , 
+                `phones` VARCHAR(200) NOT NULL, 
+                `button_url` VARCHAR(200) NOT NULL ,
+                `button_label` VARCHAR(100) NOT NULL ,
+                `image_url` LONGTEXT NOT NULL ,
+                `send_method` VARCHAR(5) NOT NULL , PRIMARY KEY (`schedule_id`)) ENGINE = InnoDB;
         </item>
         <item for="uninstall">
             DROP TABLE ?:amocrm_messages_schedule
@@ -147,7 +155,7 @@
 
         <item for="install">
             CREATE TABLE `?:amocrm_messages_log` (
-              `message_id` int(11) NOT NULL,
+              `message_id` INT NOT NULL AUTO_INCREMENT,
               `sender` varchar(50) NOT NULL,
               `body` varchar(200) NOT NULL,
               `send_time` int(11) NOT NULL,

@@ -1,3 +1,3 @@
 <div id="balance_info">
-	{__("balance")}: {$balance}р.
+	{__("balance")}: {$balance} EUR.
 <!--balance_info--></div>

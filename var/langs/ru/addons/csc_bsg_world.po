@@ -345,3 +345,7 @@ msgstr "Новый пользователь"
 msgctxt "Languages::new_order"
 msgid "New order"
 msgstr "Новый заказ"
+
+msgctxt "Languages::messages_successfully_sent"
+msgid "Messages Successfully Sent"
+msgstr "Сообщения успешно отправлены"

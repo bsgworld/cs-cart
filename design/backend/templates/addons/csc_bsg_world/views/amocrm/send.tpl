@@ -17,7 +17,7 @@
 						&nbsp;
 						{__("lazy")} <input type="radio" name="send_time_type" value="lazy">
 						<br>
-						{include file="common/calendar.tpl" date_id="send_time" date_name="send_date"}
+						{include file="common/calendar.tpl" date_id="send_time_sms" date_name="send_date"}
 						&nbsp;
 						<select name="send_hour" class="input-small">
 						    <option value="0" selected>0</option>
@@ -67,9 +67,9 @@
 						{__("order_date_range_tip")}
 					</label>
 					<div class="controls">
-						{include file="common/calendar.tpl" date_id="order_date_range_from" date_name="order_date_range_from"} 
+						{include file="common/calendar.tpl" date_id="order_date_range_from_sms" date_name="order_date_range_from"} 
 						{__("to")}
-						{include file="common/calendar.tpl" date_id="order_date_range_to" date_name="order_date_range_to"} 
+						{include file="common/calendar.tpl" date_id="order_date_range_to_sms" date_name="order_date_range_to"} 
 					</div>
 				</div>
 
@@ -117,11 +117,11 @@
 				<div class="control-group">
 					<label for="send_time" class="control-label">{__("send_time")}</label>
 					<div class="controls">
-						{__("instant")} <input type="radio" name="send_time_type" value="instant">
+						{__("instant")} <input type="radio" name="send_time_type" value="instant" checked>
 						&nbsp;
 						{__("lazy")} <input type="radio" name="send_time_type" value="lazy">
 						<br>
-						{include file="common/calendar.tpl" date_id="send_time" date_name="send_date"}
+						{include file="common/calendar.tpl" date_id="send_time_viber" date_name="send_date"}
 						&nbsp;
 						<select name="send_hour" class="input-small">
 						    <option value="0" selected>0</option>
@@ -171,9 +171,9 @@
 						{__("order_date_range_tip")}
 					</label>
 					<div class="controls">
-						{include file="common/calendar.tpl" date_id="order_date_range_from" date_name="order_date_range_from"} 
+						{include file="common/calendar.tpl" date_id="order_date_range_from_viber" date_name="order_date_range_from"} 
 						{__("to")}
-						{include file="common/calendar.tpl" date_id="order_date_range_to" date_name="order_date_range_to"} 
+						{include file="common/calendar.tpl" date_id="order_date_range_to_viber" date_name="order_date_range_to"} 
 					</div>
 				</div>
 
