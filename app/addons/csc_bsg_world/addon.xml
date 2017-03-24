@@ -164,7 +164,7 @@
               `ref_id` varchar(50) NOT NULL,
               `event` varchar(50) NOT NULL,
               `order_id` int(11) NOT NULL,
-              `result` varchar(100) NOT NULL
+              `result` varchar(100) NOT NULL, PRIMARY KEY (`message_id`) 
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
         </item>
         <item for="uninstall">
