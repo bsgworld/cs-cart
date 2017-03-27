@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: cs-cart-ru\n"
-"Language-Team: Russian\n"
-"Language: ru_RU\n"
+"Language-Team: English\n"
+"Language: en_US\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: cs-cart-ru\n"
-"X-Crowdin-Language: ru\n"
+"X-Crowdin-Language: en\n"
 "X-Crowdin-File: /addons/csc_bsg_world.po\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Last-Translator: cscart <manager@cs-coding.com>\n"
@@ -18,11 +18,11 @@ msgstr "CS-Coding: BSG.World"
 
 msgctxt "Addons::description::csc_bsg_world"
 msgid "Integration with BSG.World"
-msgstr "Интеграция с BSG.World. Разработано компанией <a href="http://cs-coding.ru" target="_blank">CS-Coding</a>"
+msgstr "Integration with BSG.World. Developed by <a href="http://cs-coding.ru" target="_blank">CS-Coding</a>"
 
 msgctxt "SettingsSections::csc_bsg_world::general"
 msgid "General"
-msgstr "Общие"
+msgstr "General"
 
 msgctxt "SettingsOptions::csc_bsg_world::api_key"
 msgid "Live API Key"
@@ -34,19 +34,19 @@ msgstr "Test API Key"
 
 msgctxt "SettingsOptions::csc_bsg_world::cron_pass"
 msgid "Cron Password"
-msgstr "Пароль для Cron"
+msgstr "Cron Password"
 
 msgctxt "SettingsSections::csc_bsg_world::admin_notifications"
 msgid "Admin Notifications"
-msgstr "Уведомления Администратора"
+msgstr "Admin Notifications"
 
 msgctxt "SettingsOptions::csc_bsg_world::admin_phones"
 msgid "Admin phone numbers. Ex. +79xxxxxxxxx, +380xxxxxxxxxx"
-msgstr "Номера телефонов администраторов (через запятую) в международном формате. Например +7хххххххххх, +380хххххххххх."
+msgstr "Admin phone numbers. Ex. +79xxxxxxxxx, +380xxxxxxxxxx"
 
 msgctxt "SettingsOptions::csc_bsg_world::send_method"
 msgid "Send method"
-msgstr "Способ отправки"
+msgstr "Send method"
 
 msgctxt "SettingsVariants::csc_bsg_world::send_method::sms"
 msgid "SMS"
@@ -62,83 +62,83 @@ msgstr "Omni"
 
 msgctxt "SettingsOptions::csc_bsg_world::send_conditions"
 msgid "Send message if"
-msgstr "Отправить сообщение если"
+msgstr "Send message if"
 
 msgctxt "SettingsOptions::csc_bsg_world::new_user_registered"
 msgid "New user registered"
-msgstr "Зарегистрирован новый пользователь"
+msgstr "New user registered"
 
 msgctxt "SettingsOptions::csc_bsg_world::stock_less_zero"
 msgid "Stock less zero"
-msgstr "Количество товара в наличии меньше нуля"
+msgstr "Stock less zero"
 
 msgctxt "SettingsOptions::csc_bsg_world::new_order"
 msgid "New order is placed"
-msgstr "Размещен новый заказ"
+msgstr "New order is placed"
 
 msgctxt "SettingsOptions::csc_bsg_world::order_updated"
 msgid "Order has ben updated"
-msgstr "Заказ был обновлен"
+msgstr "Order has ben updated"
 
 msgctxt "SettingsOptions::csc_bsg_world::order_total_more_than"
 msgid "Send just if order total exceeds"
-msgstr "Отправлять только если сумма заказа превышает"
+msgstr "Send just if order total exceeds"
 
 msgctxt "SettingsOptions::csc_bsg_world::shippings_condition"
 msgid "Send just if one of the following shipping methods is selected"
-msgstr "Отправлять только если выбран один из следующих способов доставки"
+msgstr "Send just if one of the following shipping methods is selected"
 
 msgctxt "SettingsOptions::csc_bsg_world::order_status_condition"
 msgid "Send just if order status is one of the following"
-msgstr "Отправлять только если статус заказа один из следующих"
+msgstr "Send just if order status is one of the following"
 
 msgctxt "SettingsOptions::csc_bsg_world::sms_content"
 msgid "SMS Content"
-msgstr "Содержание SMS"
+msgstr "SMS Content"
 
 msgctxt "SettingsOptions::csc_bsg_world::include_payment_info"
 msgid "Include payment info"
-msgstr "Добавить информацию об оплате"
+msgstr "Include payment info"
 
 msgctxt "SettingsOptions::csc_bsg_world::include_customer_email"
 msgid "Include customer e-mail"
-msgstr "Добавить эл. почту покупателя"
+msgstr "Include customer e-mail"
 
 msgctxt "SettingsSections::csc_bsg_world::customer_notifications"
 msgid "Customer Notifications"
-msgstr "Уведомления Покупателя"
+msgstr "Customer Notifications"
 
 msgctxt "SettingsOptions::csc_bsg_world::phone_field"
 msgid "Customer phone field"
-msgstr "Поле телефона покупателя"
+msgstr "Customer phone field"
 
 msgctxt "SettingsVariants::csc_bsg_world::phone_field::billing"
 msgid "Billing Phone"
-msgstr "Телефон оплаты"
+msgstr "Billing Phone"
 
 msgctxt "SettingsVariants::csc_bsg_world::phone_field::shipping"
 msgid "Shipping Phone"
-msgstr "Телефон доставки"
+msgstr "Shipping Phone"
 
 msgctxt "SettingsOptions::csc_bsg_world::customer_order_updated"
 msgid "Order has ben updated"
-msgstr "Заказ был обновлен"
+msgstr "Order has ben updated"
 
 msgctxt "SettingsOptions::csc_bsg_world::customer_shippings_condition"
 msgid "Send just if one of the following shipping methods is selected"
-msgstr "Отправлять только если выбран один из следующих способов доставки"
+msgstr "Send just if one of the following shipping methods is selected"
 
 msgctxt "SettingsOptions::csc_bsg_world::customer_order_status_condition"
 msgid "Send just if order status is one of the following"
-msgstr "Отправлять только если статус заказа один из следующих"
+msgstr "Send just if order status is one of the following"
 
 msgctxt "SettingsOptions::csc_bsg_world::customer_order_total_more_than"
 msgid "Send just if order total exceeds"
-msgstr "Отправлять только если сумма заказа превышает"
+msgstr "Send just if order total exceeds"
 
 msgctxt "Languages::send_messages"
 msgid "Send Message"
-msgstr "Отправка сообщений"
+msgstr "Send Message"
 
 msgctxt "Languages::sms"
 msgid "SMS"
@@ -154,100 +154,99 @@ msgstr "Omni"
 
 msgctxt "Languages::sms_text"
 msgid "SMS Text"
-msgstr "Текст сообщения"
+msgstr "SMS Text"
 
 msgctxt "Languages::send_time"
 msgid "Send Time"
-msgstr "Время отправки"
+msgstr "Send Time"
 
 msgctxt "Languages::phone_numbers"
 msgid "Phone Numbers"
-msgstr "Номера телефонов"
+msgstr "НPhone Numbers"
 
 msgctxt "Languages::phone_numbers_tip"
 msgid "Divide by ,"
-msgstr "Через запятую"
+msgstr "Divide by ,"
 
 msgctxt "Languages::send_user_groups"
 msgid "Send to user groups"
-msgstr "Отправить группам пользователей"
+msgstr "Send to user groups"
 
 msgctxt "Languages::order_date_range"
 msgid "Send to customers, that ordered in"
-msgstr "Отправить клиентам, оформившим заказ за период"
+msgstr "Send to customers, that ordered in"
 
 msgctxt "Languages::order_date_range_tip"
 msgid "Adv: Select dates that are boundary to the period. For ex. to send message to customers, that made an order 15 Sep 2013, you should select period from 14.09.2012 to 16.09.2013"
-msgstr "Совет: Выберите даты таким образом, чтобы они являлись границами
-периода. Например для отправки сообщения клиентам, сделавшим заказ 15 сентября 2013 года, необходимо задать период с 14.09.2013 до 16.09.2013"
+msgstr "Adv: Select dates that are boundary to the period. For ex. to send message to customers, that made an order 15 Sep 2013, you should select period from 14.09.2012 to 16.09.2013"
 
 msgctxt "Languages::delivery_status"
 msgid "Delivery Status"
-msgstr "Статус доставки"
+msgstr "Delivery Status"
 
 msgctxt "Languages::button_url"
 msgid "Button URL"
-msgstr "URL Кнопки"
+msgstr "Button URL"
 
 msgctxt "Languages::button_label"
 msgid "Button Label"
-msgstr "Надпись кнопки"
+msgstr "Button Label"
 
 msgctxt "Languages::image_url"
 msgid "Image URL"
-msgstr "Ссылка на изображение"
+msgstr "Image URL"
 
 msgctxt "Languages::instant"
 msgid "Instant"
-msgstr "Мгновенно"
+msgstr "Instant"
 
 msgctxt "Languages::lazy"
 msgid "Lazy"
-msgstr "Отложенный"
+msgstr "Lazy"
 
 msgctxt "Languages::messages_report"
 msgid "Messages Report"
-msgstr "Отчет по отправленным сообщениям"
+msgstr "Messages Report"
 
 msgctxt "Languages::sender_name"
 msgid "Sender Name"
-msgstr "Имя Отправителя"
+msgstr "Sender Name"
 
 msgctxt "Languages::recepient"
 msgid "Recipient"
-msgstr "Получатель"
+msgstr "Recipient"
 
 msgctxt "Languages::delivery_start"
 msgid "Delivery Start"
-msgstr "Начало отправки"
+msgstr "Delivery Start"
 
 msgctxt "Languages::change_date"
 msgid "Change Date"
-msgstr "Дата изменений"
+msgstr "Change Date"
 
 msgctxt "Languages::message_text"
 msgid "Message Text"
-msgstr "Текст сообщения"
+msgstr "Message Text"
 
 msgctxt "Languages::order_id"
 msgid "Order ID"
-msgstr "ID Заказа"
+msgstr "Order ID"
 
 msgctxt "Languages::event"
 msgid "Event"
-msgstr "Событие"
+msgstr "Event"
 
 msgctxt "Languages::result"
 msgid "Result"
-msgstr "Результат"
+msgstr "Result"
 
 msgctxt "SettingsSections::csc_bsg_world::feedback"
 msgid "Feedback"
-msgstr "Обратная связь"
+msgstr "Feedback"
 
 msgctxt "SettingsSections::csc_bsg_world::help"
 msgid "Help"
-msgstr "Помощь"
+msgstr "Help"
 
 msgctxt "Languages::amocrm_help"
 msgid "Help me!!!"
@@ -255,101 +254,100 @@ msgstr "Help me!!!111"
 
 msgctxt "Languages::amocrm_vars"
 msgid "Here you can use vars for events"
-msgstr "В этом разделе можно установить шаблон для отправки сообщений
-при наступлении события, где"
+msgstr "Here you can use vars for events"
 
 msgctxt "Languages::equals_order_id"
 msgid "equals Order ID"
-msgstr "равен номеру заказа"
+msgstr "equals Order ID"
 
 msgctxt "Languages::equals_order_total"
 msgid "equals_order_total"
-msgstr "равен сумме заказа"
+msgstr "equals_order_total"
 
 msgctxt "Languages::equals_user_name"
 msgid "equals user name"
-msgstr "равен имени пользователя"
+msgstr "equals user name"
 
 msgctxt "Languages::equals_user_last_name"
 msgid "equals user last name"
-msgstr "равен фамилии пользователя"
+msgstr "equals user last name"
 
 msgctxt "Languages::equals_user_email"
 msgid "equals user email"
-msgstr "равен E-Mail покупалетя"
+msgstr "equals user email"
 
 msgctxt "Languages::equals_shipping_country"
 msgid "equals shipping country"
-msgstr "равен стране доставки"
+msgstr "equals shipping country"
 
 msgctxt "Languages::equals_shipping_address"
 msgid "equals shipping address"
-msgstr "равен адресу доставки"
+msgstr "equals shipping address"
 
 msgctxt "Languages::equals_shipping_city"
 msgid "equals shipping city"
-msgstr "равен городу доставки"
+msgstr "equals shipping city"
 
 msgctxt "Languages::equals_shipping_state"
 msgid "equals shipping state"
-msgstr "равен области (району) доставки"
+msgstr "equals shipping state"
 
 msgctxt "Languages::accept_message_send"
 msgid "accept message send"
-msgstr "Подтвердите отправку сообщений"
+msgstr "accept message send"
 
 msgctxt "Languages::count_sms_to_send"
 msgid "messages count"
-msgstr "Количество сообщений для отправки"
+msgstr "messages count"
 
 msgctxt "Languages::total_sms_cost"
 msgid "total sms cost"
-msgstr "Общая стоимость сообщений"
+msgstr "total sms cost"
 
 msgctxt "Languages::new_user_registered"
 msgid "New user Registered"
-msgstr "Зарегистрирован новый пользователь"
+msgstr "New user Registered"
 
 msgctxt "Languages::stock_less_zero"
 msgid "Stock less zero"
-msgstr "Остаток товара меньше нуля"
+msgstr "Stock less zero"
 
 msgctxt "Languages::order_updated"
 msgid "Order has been updates"
-msgstr "Заказ был обновлен"
+msgstr "Order has been updates"
 
 msgctxt "Languages::order_status_changed"
 msgid "Order status changed"
-msgstr "Статус заказа изменен"
+msgstr "Order status changed"
 
 msgctxt "Languages::cron_tip"
 msgid "Use the following command for cron to send scheduled messages"
-msgstr "Используйте следующую команду для крона для отправки отложенных сообщений"
+msgstr "Use the following command for cron to send scheduled messages"
 
 msgctxt "Languages::instant_message"
 msgid "Instant Message"
-msgstr "Мгновенная отправка"
+msgstr "Instant Message"
 
 msgctxt "Languages::scheduled_message"
 msgid "Scheduled Message"
-msgstr "Отложенная отправка"
+msgstr "Scheduled Message"
 
 msgctxt "Languages::new_user"
 msgid "New User"
-msgstr "Новый пользователь"
+msgstr "New User"
 
 msgctxt "Languages::new_order"
 msgid "New order"
-msgstr "Новый заказ"
+msgstr "New order"
 
 msgctxt "Languages::messages_successfully_sent"
 msgid "Messages Successfully Sent"
-msgstr "Сообщения успешно отправлены"
+msgstr "Messages Successfully Sent"
 
 msgctxt "Languages::bsg_new_version"
 msgid "New version of BSG.World is released. You can download it"
-msgstr "Вышла новая версия модуля BSG.World. Вы можете скачать ее"
+msgstr "New version of BSG.World is released. You can download it"
 
 msgctxt "Languages::here"
 msgid "here"
-msgstr "здесь"
+msgstr "here"
