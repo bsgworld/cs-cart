@@ -18,7 +18,7 @@ msgstr "CS-Coding: BSG.World"
 
 msgctxt "Addons::description::csc_bsg_world"
 msgid "Integration with BSG.World"
-msgstr "Integration with BSG.World. Developed by <a href="http://cs-coding.ru" target="_blank">CS-Coding</a>"
+msgstr "Integration with BSG.World. Developed by <a href="http://cs-coding.com" target="_blank">CS-Coding</a>"
 
 msgctxt "SettingsSections::csc_bsg_world::general"
 msgid "General"
