@@ -17,8 +17,8 @@ msgid "CS-Coding: BSG.World"
 msgstr "CS-Coding: BSG.World"
 
 msgctxt "Addons::description::csc_bsg_world"
-msgid "Integration with AmoCrm"
-msgstr "Интеграция с AmoCRM"
+msgid "Integration with BSG.World"
+msgstr "Интеграция с BSG.World"
 
 msgctxt "SettingsSections::csc_bsg_world::general"
 msgid "General"
@@ -349,3 +349,11 @@ msgstr "Новый заказ"
 msgctxt "Languages::messages_successfully_sent"
 msgid "Messages Successfully Sent"
 msgstr "Сообщения успешно отправлены"
+
+msgctxt "Languages::bsg_new_version"
+msgid "New version of BSG.World is released. You can download it"
+msgstr "Вышла новая версия модуля BSG.World. Вы можете скачать ее"
+
+msgctxt "Languages::here"
+msgid "here"
+msgstr "здесь"

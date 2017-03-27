@@ -13,7 +13,7 @@
 </div>
 
 <div class="control-group">
-	<label for="issue_description" class="control-label">{__("your_email")}</label>
+	<label for="issue_description" class="control-label">{__("message")}</label>
 	<div class="controls">
 		<textarea name="feedback[issue]" id="issue_description"></textarea>
 	</div>

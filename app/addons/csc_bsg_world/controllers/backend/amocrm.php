@@ -1,5 +1,6 @@
 <?php
 use Tygh\Registry;
+use Tygh\Mailer;
 if (!defined('BOOTSTRAP')) { die('Access denied'); }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
@@ -41,7 +42,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
 	if ($mode == 'send_feedback')
 	{
-		fn_set_notification('N', __("success"), __("feedback_has_been_sent"));
+		$mailer = Tygh::$app['mailer'];
+		$mailer->send(array(
+            'to' => BSG_FEEDBACK_MAIL,
+            'from' => 'default_company_users_department',
+            'data' => array(
+                'feedback' => $_REQUEST['feedback']
+            ),
+            'tpl' => 'addons/csc_bsg_world/feedback.tpl',
+        ), 'A');
+
+        fn_set_notification("N", __("successful"), __("text_email_sent"));
 
 		return array(CONTROLLER_STATUS_OK, 'addons.update?addon=csc_bsg_world');
 	}
