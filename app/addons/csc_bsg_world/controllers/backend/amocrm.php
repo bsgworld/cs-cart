@@ -62,6 +62,10 @@ else
 {
 	if ($mode == 'log')
 	{
+		$bsg = new BSG(Registry::get('settings.Company.company_name'), 'BSG');
+		$smsClient = $bsg->getSmsClient();
+		$viberClient = $bsg->getViberClient();
+
 		$items_per_page = $_REQUEST['items_per_page'] ? $_REQUEST['items_per_page'] : 10;
 		$page = $_REQUEST['page'] ? $_REQUEST['page'] : 1;
 		$total_msg = db_get_field('select count(message_id) from ?:amocrm_messages_log');
@@ -69,6 +73,13 @@ else
 		$limit = db_paginate($page, $items_per_page, $total_msg);
 
 		$messages = db_get_array("select * from ?:amocrm_messages_log $limit");
+
+		foreach($messages as &$msg)
+		{
+			if ($msg['send_method'] == 'sms') $result = $smsClient->getStatusByReference($msg['ref_id']);
+			if ($msg['send_method'] == 'viber') $result = $viberClient->getStatusByReference($msg['ref_id']);
+			$msg['result'] = $result['errorDescription'] . '. ' . $result['status'];
+		}
 
 		$search['total_items'] = $total_msg;
 		$search['items_per_page'] = $items_per_page;

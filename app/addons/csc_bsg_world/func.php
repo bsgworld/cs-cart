@@ -157,7 +157,8 @@ function fn_send_amocrm_message($params)
 		if ($res['result'][0]) $result = $res['result'];
 		else $result[0] = $res['result'];
 
-		//запись результатов отправки по reference id
+		/*/запись результатов отправки по reference id
+		deprecated
 		if ($params['mode'] != 'test')
 		{
 			foreach($result as $res)
@@ -165,6 +166,7 @@ function fn_send_amocrm_message($params)
 				db_query('update ?:amocrm_messages_log set result = ?s where ref_id = ?s', $res['errorDescription'], $res['reference']);
 			}
 		}
+		*/
 	}
 	if ($send_method == 'viber')
 	{
