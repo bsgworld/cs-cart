@@ -353,3 +353,7 @@ msgstr "Вышла новая версия модуля BSG.World. Вы може
 msgctxt "Languages::here"
 msgid "here"
 msgstr "здесь"
+
+msgctxt "Languages::send_method"
+msgid "Send method"
+msgstr "Способ отправки"

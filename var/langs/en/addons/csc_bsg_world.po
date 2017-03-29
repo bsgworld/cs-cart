@@ -351,3 +351,7 @@ msgstr "New version of BSG.World is released. You can download it"
 msgctxt "Languages::here"
 msgid "here"
 msgstr "here"
+
+msgctxt "Languages::send_method"
+msgid "Send method"
+msgstr "Send Method"

@@ -3,7 +3,7 @@ use Tygh\Registry;
 define('AREA', 'A');
 require ('init.php');
 
-if (!$_REQUEST['cron_pass'] || $_REQUEST['cron_pass'] != Registry::get('addons.csc_amocrm.cron_pass')) die('Access denied');
+if (!$_REQUEST['cron_pass'] || $_REQUEST['cron_pass'] != Registry::get('addons.csc_bsg_world.cron_pass')) die('Access denied');
 
 $schedule = db_get_hash_array('select * from ?:amocrm_messages_schedule where send_time <= ?i', 'schedule_id', time());
 

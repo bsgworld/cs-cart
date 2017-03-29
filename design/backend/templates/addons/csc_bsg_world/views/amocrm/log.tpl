@@ -5,6 +5,7 @@
 			<tr>
 				<th>ID</th>
 				<th>{__("sender_name")}</th>
+				<th>{__("send_method")}</th>
 				<th>{__("recepient")}</th>
 				<th>{__("delivery_start")}</th>
 				<th>{__("message_text")}</th>
@@ -18,6 +19,7 @@
 				<tr>
 					<td>{$message.message_id}</td>
 					<td>{$message.sender}</td>
+					<td>{$message.send_method}</td>
 					<td>{$message.phone}</td>
 					<td>{"d.m.Y H:i:s"|date:$message.send_time}</td>
 					<td>{$message.body}</td>

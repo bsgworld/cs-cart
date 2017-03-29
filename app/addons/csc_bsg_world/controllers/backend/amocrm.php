@@ -15,7 +15,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
 		$picker_phones = db_get_fields('select ' . $phone_field_prefix . 'phone from ?:user_profiles where user_id in (?n)', $_REQUEST['users']);
 
-		$order_phones = db_get_fields('select ' . $phone_field_prefix . 'phone from ?:user_profiles where user_id in (select user_id from ?:orders where timestamp >= ?i and timestamp <= ?i)', strtotime($_REQUEST['order_date_range_from']), strtotime($_REQUEST['order_date_range_to']));
+		$order_phones = db_get_fields('select ' . $phone_field_prefix . 'phone from ?:orders where timestamp >= ?i and timestamp <= ?i', strtotime($_REQUEST['order_date_range_from']), strtotime($_REQUEST['order_date_range_to']));
+		
 		$phones = array_unique(array_merge($phones, $user_groups_phones, $picker_phones, $order_phones));
 		//$phones []= '+79095854034';
 
