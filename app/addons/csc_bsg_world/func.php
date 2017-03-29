@@ -208,12 +208,14 @@ function fn_send_amocrm_message($params)
 		//запись в лог
 		if (!empty($log_data)) db_query('insert into ?:amocrm_messages_log ?m', $log_data);
 
-		//отправка сообщенек
+		/*/запись в лог
+		deprecated
 		$res = $viberClient->sendMessages();
 		foreach($res['result'] as $result)
 		{
 			db_query('update ?:amocrm_messages_log set result = ?s where ref_id = ?s', $result['errorDescription'], $result['reference']);
 		}
+		*/
 	}
 
 	return $res;
