@@ -121,7 +121,7 @@ else
 			'sms' => array(
 	            'title' => __('sms'),
 	            'js' => true
-	        ),
+	        )/*,
 	        'viber' => array (
 	            'title' => __('viber'),
 	            'js' => true
@@ -129,7 +129,7 @@ else
 	        'omni' => array (
 	            'title' => __('omni'),
 	            'js' => true
-	        )
+	        )*/
 		);
 
 		Registry::set('navigation.tabs', $tabs);

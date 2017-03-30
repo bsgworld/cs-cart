@@ -43,8 +43,6 @@
     					<type>radiogroup</type>
     					<variants>
     						<item id="sms"></item>
-    						<item id="viber"></item>
-    						<item id="omni"></item>
     					</variants>
                         <default_value>sms</default_value>
     				</item>
