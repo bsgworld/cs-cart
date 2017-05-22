@@ -9,7 +9,7 @@ function fn_get_amocrm_balance()
 	$bsg = new BSG();
 	$balance = $bsg->getSMSClient()->getBalance();
 	
-	return $balance['limit'] ? $balance['limit'] : 0;
+	return $balance;
 }
 
 function fn_csc_bsg_world_account_info()
@@ -27,7 +27,7 @@ function fn_csc_bsg_world_account_info()
 		<a href="https://app.bsg.hk/" target="_blank">' . __("account") . '</a>
 		<a href="https://app.bsg.hk/auth/forgot-password" target="_blank">' . __("forgot_password_question") . '</a>
 		<div id="balance_info">
-			'. __("balance") . ': ' . $balance . ' EUR.
+			'. __("balance") . ': ' . $balance['amount'] . ' ' . $balance['currency'] . '
 		<!--balance_info--></div>
 		<a class="btn" onclick="Tygh.$.ceAjax(\'request\', \'' . fn_url('amocrm.refresh_balance') . '\', {result_ids: \'balance_info\'});">' . __("update") . '</a>
 	</div>
