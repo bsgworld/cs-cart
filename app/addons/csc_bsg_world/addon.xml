@@ -18,6 +18,9 @@
     	<sections>
     		<section id="general">
     			<items>
+					<item id="sender">
+    					<type>input</type>
+    				</item>
     				<item id="api_key">
     					<type>input</type>
     				</item>
