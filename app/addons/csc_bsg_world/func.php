@@ -168,7 +168,7 @@ function fn_send_amocrm_message($params)
 		}
 		*/
 	}
-	if ($send_method == 'viber')
+	if ($send_method == 'viber' || $send_method == 'omni')
 	{
 		$viberClient = $bsg->getViberClient();
 		foreach($phones as $key => $phone)
@@ -187,8 +187,15 @@ function fn_send_amocrm_message($params)
 				'caption' => $params['button_label'],
 				'action' => $params['button_url']
 			);
+			if ($send_method == 'omni')
+			{
+				$options['alt_route'] = array(
+					'originator' => Registry::get('settings.Company.company_name'),
+					'text' => $params['body']
+				);
+			}
 			$viberClient->addMessage($to, $params['body'], $options);
-
+			$res = $viberClient->sendMessages();
 			//формирование массива для лога
 			if ($params['mode'] != 'test')
 			{
@@ -197,7 +204,7 @@ function fn_send_amocrm_message($params)
 					'body' => $params['body'],
 					'send_time' => time(),
 					'phone' => $phone,
-					'send_method' => 'viber',
+					'send_method' => $send_method,
 					'ref_id' => $ref_id,
 					'event' => $params['event'],
 					'order_id' => $params['order_id'] ? $params['order_id'] : 0
@@ -210,7 +217,6 @@ function fn_send_amocrm_message($params)
 
 		/*/запись в лог
 		deprecated
-		$res = $viberClient->sendMessages();
 		foreach($res['result'] as $result)
 		{
 			db_query('update ?:amocrm_messages_log set result = ?s where ref_id = ?s', $result['errorDescription'], $result['reference']);
