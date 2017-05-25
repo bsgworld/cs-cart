@@ -101,9 +101,9 @@ function fn_settings_variants_addons_csc_bsg_world_customer_order_status_conditi
 //я сначала думал что сервис называется amocrm поэтому название функции немного неправильное))
 function fn_send_amocrm_message($params)
 {
-	if ($params['mode'] != 'test') $bsg = new BSG(Registry::get('settings.Company.company_name'), 'BSG');
+	if ($params['mode'] != 'test') $bsg = new BSG(Registry::get('addons.csc_bsg_world.sender'), 'BSG');
 	else $bsg = new BSG('test', 'BSG', null, 'test');
-
+	
 	$addon = Registry::get('addons.csc_bsg_world');
 	
 	$send_method = $params['send_method'] ? $params['send_method'] : $addon['send_method'];
@@ -190,7 +190,7 @@ function fn_send_amocrm_message($params)
 			if ($send_method == 'omni')
 			{
 				$options['alt_route'] = array(
-					'originator' => Registry::get('settings.Company.company_name'),
+					'originator' => Registry::get('addons.csc_bsg_world.sender'),
 					'text' => $params['body']
 				);
 			}
