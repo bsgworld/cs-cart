@@ -29,7 +29,7 @@ function fn_csc_bsg_world_account_info()
 		<div id="balance_info">
 			'. __("balance") . ': ' . $balance['amount'] . ' ' . $balance['currency'] . '
 		<!--balance_info--></div>
-		<a class="btn" onclick="Tygh.$.ceAjax(\'request\', \'' . fn_url('amocrm.refresh_balance') . '\', {result_ids: \'balance_info\'});">' . __("update") . '</a>
+		<a class="btn" onclick="Tygh.$.ceAjax(\'request\', \'' . fn_url('bsg.refresh_balance') . '\', {result_ids: \'balance_info\'});">' . __("update") . '</a>
 	</div>
 	';
 }
