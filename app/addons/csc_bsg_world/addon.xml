@@ -20,9 +20,11 @@
     			<items>
 					<item id="sender_sms">
     					<type>input</type>
+						<default_value>testsms</default_value>
     				</item>
 					<item id="sender_viber">
     					<type>input</type>
+						<default_value>BSG</default_value>
     				</item>
     				<item id="api_key">
     					<type>input</type>
