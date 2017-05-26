@@ -24,9 +24,13 @@ msgctxt "SettingsSections::csc_bsg_world::general"
 msgid "General"
 msgstr "Общие"
 
-msgctxt "SettingsOptions::csc_bsg_world::sender"
-msgid "Sender"
-msgstr "Отправитель"
+msgctxt "SettingsOptions::csc_bsg_world::sender_sms"
+msgid "Sender SMS"
+msgstr "Отправитель SMS"
+
+msgctxt "SettingsOptions::csc_bsg_world::sender_viber"
+msgid "Sender Viber"
+msgstr "Отправитель Viber"
 
 msgctxt "SettingsOptions::csc_bsg_world::api_key"
 msgid "Live API Key"
