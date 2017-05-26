@@ -101,12 +101,13 @@ function fn_settings_variants_addons_csc_bsg_world_customer_order_status_conditi
 //я сначала думал что сервис называется amocrm поэтому название функции немного неправильное))
 function fn_send_amocrm_message($params)
 {
-	if ($params['mode'] != 'test') $bsg = new BSG(Registry::get('addons.csc_bsg_world.sender'), 'BSG');
-	else $bsg = new BSG('test', 'BSG', null, 'test');
-	
 	$addon = Registry::get('addons.csc_bsg_world');
-	
 	$send_method = $params['send_method'] ? $params['send_method'] : $addon['send_method'];
+	if ($send_method == 'sms') $sender = $addon['sender_sms'];
+	else $sender = $addon['sender_viber'];
+	
+	if ($params['mode'] != 'test') $bsg = new BSG($sender, 'BSG');
+	else $bsg = new BSG('test', $sender, null, 'test');
 	
 	if ($params['recipient'] == 'admin') $phones = explode(',', $addon['admin_phones']);
 	if ($params['recipient'] == 'customer')
@@ -136,7 +137,7 @@ function fn_send_amocrm_message($params)
 			if ($params['mode'] != 'test')
 			{
 				$log_data []= array(
-					'sender' => Registry::get('settings.Company.company_name'),
+					'sender' => $sender,
 					'body' => $params['body'],
 					'send_time' => time(),
 					'phone' => $phone,
@@ -190,7 +191,7 @@ function fn_send_amocrm_message($params)
 			if ($send_method == 'omni')
 			{
 				$options['alt_route'] = array(
-					'originator' => Registry::get('addons.csc_bsg_world.sender'),
+					'originator' => $sender,
 					'text' => $params['body']
 				);
 			}
@@ -200,7 +201,7 @@ function fn_send_amocrm_message($params)
 			if ($params['mode'] != 'test')
 			{
 				$log_data []= array(
-					'sender' => Registry::get('settings.Company.company_name'),
+					'sender' => $sender,
 					'body' => $params['body'],
 					'send_time' => time(),
 					'phone' => $phone,
