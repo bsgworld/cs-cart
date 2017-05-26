@@ -18,7 +18,10 @@
     	<sections>
     		<section id="general">
     			<items>
-					<item id="sender">
+					<item id="sender_sms">
+    					<type>input</type>
+    				</item>
+					<item id="sender_viber">
     					<type>input</type>
     				</item>
     				<item id="api_key">
