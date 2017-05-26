@@ -85,7 +85,7 @@
 
 		<div id="content_viber">
 			<form action="{""|fn_url}" method="POST" class="form-horizontal">
-				<input type="hidden" name="send_method" value="viber">
+				<input type="hidden" name="send_method" value="omni">
 				<div class="control-group">
 					<label for="sms_text" class="control-label">{__("sms_text")}</label>
 					<div class="controls">
