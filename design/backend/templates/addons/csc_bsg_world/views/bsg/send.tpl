@@ -73,7 +73,7 @@
 					</div>
 				</div>
 
-				<input type="submit" class="btn cm-ajax" name="dispatch[amocrm.check_message]" value="{__("send")}">
+				<input type="submit" class="btn cm-ajax" name="dispatch[bsg.check_message]" value="{__("send")}">
 				
 				<br><br>
 				
@@ -177,7 +177,7 @@
 					</div>
 				</div>
 
-				<input type="submit" class="btn cm-ajax" name="dispatch[amocrm.check_message]" value="{__("send")}">
+				<input type="submit" class="btn cm-ajax" name="dispatch[bsg.check_message]" value="{__("send")}">
 
 				<br><br>
 

@@ -196,7 +196,7 @@ function fn_send_amocrm_message($params)
 				);
 			}
 			$viberClient->addMessage($to, $params['body'], $options);
-			$res = $viberClient->sendMessages();
+			
 			//формирование массива для лога
 			if ($params['mode'] != 'test')
 			{
@@ -212,6 +212,8 @@ function fn_send_amocrm_message($params)
 				);
 			}
 		}
+		$res = $viberClient->sendMessages();
+		//fn_print_die($viberClient, $res);
 
 		//запись в лог
 		if (!empty($log_data)) db_query('insert into ?:amocrm_messages_log ?m', $log_data);
@@ -260,6 +262,7 @@ function fn_csc_bsg_world_update_product_amount($new_amount, $product_id, $cart_
 
 function fn_csc_bsg_world_place_order($order_id, $action, $order_status, $cart, $auth)
 {
+	$addon = Registry::get('addons.csc_bsg_world');
 	//админское
 	$min_order_total = Registry::get('addons.csc_bsg_world.order_total_more_than');
 	$order_data = fn_get_order_info($order_id);
@@ -319,9 +322,30 @@ function fn_csc_bsg_world_place_order($order_id, $action, $order_status, $cart, 
 	$available_statuses = Registry::get('addons.csc_bsg_world.customer_order_status_condition');
 	if ($order_data['total'] >= $min_order_total && (empty($available_shippings) || isset($available_shippings['N']) || $available_shippings[$order_data['shipping_ids']] == "Y") && (empty($available_statuses) || isset($available_statuses['N']) || $available_statuses[$order_data['status']] == "Y" || $order_data['status'] == 'N'))
 	{
+		if ($order_id && Registry::get('runtime.mode') == 'place_order' && $action != 'save' && $addon['customer_order_updated'] == 'Y')
+		{
+			//сообщенька кастомеру новый заказ
+			$params = array(
+				'recipient' => 'customer',
+				'body' => __("order_placed"). '. OrderID: ' . $order_id,
+				'event' => 'new_order',
+				'order_data' => $order_data,
+				'order_id' => $order_id
+			);
+			if (Registry::get('addons.csc_bsg_world.include_payment_info'))
+			{
+				$params['body'] .= '. ' . __("payment_information") . ': ' . $order_data['payment_method']['payment'];
+			}
+			if (Registry::get('addons.csc_bsg_world.include_customer_email'))
+			{
+				$params['body'] .= '. ' . __("email") . ': ' . $order_data['email'];
+			}
+			$res = fn_send_amocrm_message($params);
+		}
+		
 		if ($action == "save")
 		{
-			if (Registry::get('addons.csc_bsg_world.customer_order_updated') == 'Y')
+			if ($addon['customer_order_updated'] == 'Y')
 			{
 				//сообщенька кастомеру заказ обновлен
 				$params = array(

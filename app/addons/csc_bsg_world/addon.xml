@@ -32,6 +32,15 @@
                     <item id="test_api_key">
                         <type>input</type>
                     </item>
+					<item id="send_method">
+    					<type>radiogroup</type>
+    					<variants>
+    						<item id="sms"></item>
+							<item id="viber"></item>
+							<item id="omni"></item>
+    					</variants>
+                        <default_value>sms</default_value>
+    				</item>
                     <item id="cron_pass">
                         <type>input</type>
                         <default_value>PASSWD</default_value>
@@ -46,15 +55,6 @@
     			<items>
     				<item id="admin_phones">
     					<type>input</type>
-    				</item>
-    				<item id="send_method">
-    					<type>radiogroup</type>
-    					<variants>
-    						<item id="sms"></item>
-							<item id="viber"></item>
-							<item id="omni"></item>
-    					</variants>
-                        <default_value>sms</default_value>
     				</item>
     				<item id="send_conditions">
                         <type>header</type>

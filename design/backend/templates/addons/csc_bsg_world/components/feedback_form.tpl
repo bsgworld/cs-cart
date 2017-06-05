@@ -19,4 +19,4 @@
 	</div>
 </div>
 
-<input type="submit" name="dispatch[amocrm.send_feedback]" value="Отправить" class="btn">
+<input type="submit" name="dispatch[bsg.send_feedback]" value="Отправить" class="btn">
