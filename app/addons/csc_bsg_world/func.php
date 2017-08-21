@@ -106,8 +106,8 @@ function fn_send_amocrm_message($params)
 	if ($send_method == 'sms') $sender = $addon['sender_sms'];
 	else $sender = $addon['sender_viber'];
 	
-	if ($params['mode'] != 'test') $bsg = new BSG($sender, 'BSG');
-	else $bsg = new BSG('test', $sender, null, 'test');
+	if ($params['mode'] != 'test') $bsg = new BSG($sender, 'BSG', null, 'live', 'CS-Cart');
+	else $bsg = new BSG('test', $sender, null, 'test', 'CS-Cart');
 	
 	if ($params['recipient'] == 'admin') $phones = explode(',', $addon['admin_phones']);
 	if ($params['recipient'] == 'customer')
@@ -213,8 +213,7 @@ function fn_send_amocrm_message($params)
 			}
 		}
 		$res = $viberClient->sendMessages();
-		//fn_print_die($viberClient, $res);
-
+        //fn_print_die($res, $viberClient);
 		//запись в лог
 		if (!empty($log_data)) db_query('insert into ?:amocrm_messages_log ?m', $log_data);
 

@@ -8,9 +8,12 @@ class ApiClient {
     protected $api_key;
     protected $logger;
 
-    public function __construct($api_key)
+    public function __construct($api_key, $api_source = null)
     {
         $this->api_key = $api_key;
+        if(!$api_source) {
+            $this->api_source = 'BSG PHP Library';
+        } else $this->api_source = $api_source;
     }
 
     /**
@@ -23,9 +26,9 @@ class ApiClient {
     public function sendRequest ($resource_url, $post_data=NULL, $custom_request=NULL) {
         $client = curl_init();
         if ($post_data === NULL || !is_array($post_data))
-            curl_setopt($client,CURLOPT_HTTPHEADER,array('X-API-KEY: '.$this->api_key,'Content-type: text/json; charset=utf-8'));
+            curl_setopt($client,CURLOPT_HTTPHEADER,array('X-API-KEY: '.$this->api_key, 'X-API-SOURCE: ' . $this->api_source, 'Content-type: text/json; charset=utf-8'));
         else
-            curl_setopt($client,CURLOPT_HTTPHEADER,array('X-API-KEY: '.$this->api_key));
+            curl_setopt($client,CURLOPT_HTTPHEADER,array('X-API-KEY: '.$this->api_key, 'X-API-SOURCE: ' . $this->api_source));
         curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($client, CURLOPT_FOLLOWLOCATION, false);
         if ($custom_request !== NULL)

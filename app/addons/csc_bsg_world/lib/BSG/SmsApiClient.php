@@ -6,11 +6,11 @@ class SmsApiClient extends ApiClient {
     private $sender;
     private $tariff;
 
-    public function __construct($api_key, $sender, $tariff=null)
+    public function __construct($api_key, $sender, $tariff=null, $source = null)
     {
         $this->sender = $sender;
         $this->tariff = $tariff;
-        parent::__construct($api_key);
+        parent::__construct($api_key, $source);
     }
 
     private function getStatus ($endpoint)
@@ -146,7 +146,6 @@ class SmsApiClient extends ApiClient {
      */
     public function sendSmsMulti ($messages, $validity=72, $tariff=NULL, $only_price=false)
     {
-
         foreach ($messages as &$msg)
             if(!isset($msg['originator']) && $this->sender)
                 $msg['originator'] = $this->sender;
