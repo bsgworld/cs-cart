@@ -61,7 +61,16 @@ function fn_settings_variants_addons_csc_bsg_world_shippings_condition()
 
 function fn_settings_variants_addons_csc_bsg_world_order_status_condition()
 {
-	$statuses = db_get_array('select s.status, d.description from ?:statuses s inner join ?:status_descriptions d on s.status_id = d.status_id where s.type = "O" and d.lang_code = ?s', DESCR_SL);
+    if (version_compare(PRODUCT_VERSION, '4.3.6', '<'))
+    {
+        $on = 's.status = d.status';
+        $condition = db_quote('and d.type = "O"');
+    }
+    else
+    {
+        $on = 's.status_id = d.status_id';
+    }
+	$statuses = db_get_array("select s.status, d.description from ?:statuses s inner join ?:status_descriptions d on $on where s.type = 'O' and d.lang_code = ?s $condition", DESCR_SL);
 
 	$result = array();
 	foreach($statuses as $status)
@@ -87,7 +96,16 @@ function fn_settings_variants_addons_csc_bsg_world_customer_shippings_condition(
 
 function fn_settings_variants_addons_csc_bsg_world_customer_order_status_condition()
 {
-	$statuses = db_get_array('select s.status, d.description from ?:statuses s inner join ?:status_descriptions d on s.status_id = d.status_id where s.type = "O" and d.lang_code = ?s', DESCR_SL);
+    if (version_compare(PRODUCT_VERSION, '4.3.6', '<'))
+    {
+        $on = 's.status = d.status';
+        $condition = db_quote('and d.type = "O"');
+    }
+    else
+    {
+        $on = 's.status_id = d.status_id';
+    }
+	$statuses = db_get_array("select s.status, d.description from ?:statuses s inner join ?:status_descriptions d on $on where s.type = 'O' and d.lang_code = ?s $condition", DESCR_SL);
 
 	$result = array();
 	foreach($statuses as $status)
@@ -370,14 +388,25 @@ function fn_csc_bsg_world_place_order($order_id, $action, $order_status, $cart, 
 
 function fn_csc_bsg_world_change_order_status($status_to, $status_from, $order_info, $force_notification, $order_statuses, $place_order)
 {
+    //совместимость версий
+    if (version_compare(PRODUCT_VERSION, '4.3.6', '<'))
+    {
+        $on = 's.status = d.status';
+        $condition = db_quote('and d.type = "O"');
+    }
+    else
+    {
+        $on = 's.status_id = d.status_id';
+    }
+
 	//админское
 	$available_statuses = Registry::get('addons.csc_bsg_world.order_status_condition');
 	if ($place_order == false && $status_to != $status_from && $status_to != 'N' && (empty($available_statuses) || isset($available_statuses['N']) || $available_statuses[$status_to] == "Y"))
 	{
-		$message = db_get_field('select d.amocrm_msg from ?:statuses s inner join ?:status_descriptions d on s.status_id = d.status_id where status = ?s and lang_code = ?s and type = "O"', $status_to, DESCR_SL);
+		$message = db_get_field("select d.amocrm_msg from ?:statuses s inner join ?:status_descriptions d on $on where s.status = ?s and lang_code = ?s and s.type = 'O' $condition", $status_to, DESCR_SL);
 		$content = str_replace(array('%ORDER_ID%', '%AMOUNT%', '%NAME%', '%LAST_NAME%', '%USER_EMAIL%', '%COUNTRY%', '%ADDRESS%', '%CITY%', '%STATE%'), array($order_info['order_id'], $order_info['total'], $order_info['firstname'], $order_info['lastname'], $order_info['email'], $order_info['s_country_descr'], $order_info['s_address'], $order_info['s_city'], $order_info['s_state_descr']), $message);
 		
-		$status = db_get_field('select description from ?:statuses s inner join ?:status_descriptions d on s.status_id = d.status_id where status = ?s and lang_code = ?s and type="O"', $status_to, DESCR_SL);
+		$status = db_get_field("select description from ?:statuses s inner join ?:status_descriptions d on $on where s.status = ?s and lang_code = ?s and s.type='O' $condition", $status_to, DESCR_SL);
 		
 		//сообщеньк админу о смене статуса заказа
 		if (Registry::get('addons.csc_bsg_world.order_updated') == 'Y')
@@ -396,10 +425,10 @@ function fn_csc_bsg_world_change_order_status($status_to, $status_from, $order_i
 	$available_statuses = Registry::get('addons.csc_bsg_world.customer_order_status_condition');
 	if ($place_order == false && $status_to != $status_from && $status_to != 'N' && (empty($available_statuses) || isset($available_statuses['N']) || $available_statuses[$status_to] == "Y"))
 	{
-		$message = db_get_field('select d.amocrm_msg from ?:statuses s inner join ?:status_descriptions d on s.status_id = d.status_id where status = ?s and lang_code = ?s and type = "O"', $status_to, DESCR_SL);
+		$message = db_get_field("select d.amocrm_msg from ?:statuses s inner join ?:status_descriptions d on $on where s.status = ?s and lang_code = ?s and s.type = 'O' $condition", $status_to, DESCR_SL);
 		$content = str_replace(array('%ORDER_ID%', '%AMOUNT%', '%NAME%', '%LAST_NAME%', '%USER_EMAIL%', '%COUNTRY%', '%ADDRESS%', '%CITY%', '%STATE%'), array($order_info['order_id'], $order_info['total'], $order_info['firstname'], $order_info['lastname'], $order_info['email'], $order_info['s_country_descr'], $order_info['s_address'], $order_info['s_city'], $order_info['s_state_descr']), $message);
 		
-		$status = db_get_field('select description from ?:statuses s inner join ?:status_descriptions d on s.status_id = d.status_id where status = ?s and lang_code = ?s and type="O"', $status_to, DESCR_SL);
+		$status = db_get_field("select description from ?:statuses s inner join ?:status_descriptions d on $on where s.status = ?s and lang_code = ?s and s.type='O' $condition", $status_to, DESCR_SL);
 		if (Registry::get('addons.csc_bsg_world.customer_order_updated') == 'Y')
 		{
 			//сообщенька кастомеру о смене статуса заказа
