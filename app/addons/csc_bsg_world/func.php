@@ -277,115 +277,6 @@ function fn_csc_bsg_world_update_product_amount($new_amount, $product_id, $cart_
 	}
 }
 
-function fn_csc_bsg_world_place_order($order_id, $action, $order_status, $cart, $auth)
-{
-	$addon = Registry::get('addons.csc_bsg_world');
-	//админское
-	$min_order_total = Registry::get('addons.csc_bsg_world.order_total_more_than');
-	$order_data = fn_get_order_info($order_id);
-
-	$available_shippings = Registry::get('addons.csc_bsg_world.shippings_condition');
-	$available_statuses = Registry::get('addons.csc_bsg_world.order_status_condition');
-	if ($order_data['total'] > $min_order_total && (empty($available_shippings) || isset($available_shippings['N']) || $available_shippings[$order_data['shipping_ids']] == "Y") && (empty($available_statuses) || isset($available_statuses['N']) || $available_statuses[$order_data['status']] == "Y" || $order_data['status'] == 'N'))
-	{
-		if ($order_id && Registry::get('runtime.mode') == 'place_order' && $action != 'save')
-		{
-			//сообщенька админу новый заказ
-			$params = array(
-				'recipient' => 'admin',
-				'body' => __("order_placed"). '. OrderID: ' . $order_id,
-				'event' => 'new_order',
-				'order_id' => $order_id
-			);
-			if (Registry::get('addons.csc_bsg_world.include_payment_info'))
-			{
-				$params['body'] .= '. ' . __("payment_information") . ': ' . $order_data['payment_method']['payment'];
-			}
-			if (Registry::get('addons.csc_bsg_world.include_customer_email'))
-			{
-				$params['body'] .= '. ' . __("email") . ': ' . $order_data['email'];
-			}
-			$res = fn_send_amocrm_message($params);
-		}
-
-		if ($action == "save")
-		{
-			if (Registry::get('addons.csc_bsg_world.order_updated') == 'Y')
-			{
-				//сообщенька админу заказ обновлен
-				$params = array(
-					'recipient' => 'admin',
-					'body' => __("order_updated"). '. OrderID: ' . $order_id,
-					'event' => 'order_updated',
-					'order_id' => $order_id
-				);
-				if (Registry::get('addons.csc_bsg_world.include_payment_info'))
-				{
-					$params['body'] .= '. ' . __("payment_information") . ': ' . $order_data['payment_method']['payment'];
-				}
-				if (Registry::get('addons.csc_bsg_world.include_customer_email'))
-				{
-					$params['body'] .= '. ' . __("email") . ': ' . $order_data['email'];
-				}
-				$res = fn_send_amocrm_message($params);
-			}
-		}
-	}
-
-	//кастомерское
-	$min_order_total = Registry::get('addons.csc_bsg_world.customer_order_total_more_than');
-
-	$available_shippings = Registry::get('addons.csc_bsg_world.customer_shippings_condition');
-	$available_statuses = Registry::get('addons.csc_bsg_world.customer_order_status_condition');
-	if ($order_data['total'] >= $min_order_total && (empty($available_shippings) || isset($available_shippings['N']) || $available_shippings[$order_data['shipping_ids']] == "Y") && (empty($available_statuses) || isset($available_statuses['N']) || $available_statuses[$order_data['status']] == "Y" || $order_data['status'] == 'N'))
-	{
-		if ($order_id && Registry::get('runtime.mode') == 'place_order' && $action != 'save' && $addon['customer_order_updated'] == 'Y')
-		{
-			//сообщенька кастомеру новый заказ
-			$params = array(
-				'recipient' => 'customer',
-				'body' => __("order_placed"). '. OrderID: ' . $order_id,
-				'event' => 'new_order',
-				'order_data' => $order_data,
-				'order_id' => $order_id
-			);
-			if (Registry::get('addons.csc_bsg_world.include_payment_info'))
-			{
-				$params['body'] .= '. ' . __("payment_information") . ': ' . $order_data['payment_method']['payment'];
-			}
-			if (Registry::get('addons.csc_bsg_world.include_customer_email'))
-			{
-				$params['body'] .= '. ' . __("email") . ': ' . $order_data['email'];
-			}
-			$res = fn_send_amocrm_message($params);
-		}
-		
-		if ($action == "save")
-		{
-			if ($addon['customer_order_updated'] == 'Y')
-			{
-				//сообщенька кастомеру заказ обновлен
-				$params = array(
-					'recipient' => 'customer',
-					'body' => __("order_updated"). '. OrderID: ' . $order_id,
-					'order_data' => $order_data,
-					'event' => 'order_updated',
-					'order_id' => $order_id
-				);
-				if (Registry::get('addons.csc_bsg_world.include_payment_info'))
-				{
-					$params['body'] .= '. ' . __("payment_information") . ': ' . $order_data['payment_method']['payment'];
-				}
-				if (Registry::get('addons.csc_bsg_world.include_customer_email'))
-				{
-					$params['body'] .= '. ' . __("email") . ': ' . $order_data['email'];
-				}
-				$res = fn_send_amocrm_message($params);
-			}
-		}
-	}
-}
-
 function fn_csc_bsg_world_change_order_status($status_to, $status_from, $order_info, $force_notification, $order_statuses, $place_order)
 {
     //совместимость версий
@@ -399,9 +290,29 @@ function fn_csc_bsg_world_change_order_status($status_to, $status_from, $order_i
         $on = 's.status_id = d.status_id';
     }
 
+    //кастомерское
+    $available_statuses = Registry::get('addons.csc_bsg_world.order_status_condition');
+    if ($status_to != $status_from && $status_to != 'N' && (empty($available_statuses) || isset($available_statuses['N']) || $available_statuses[$status_to] == "Y"))
+    {
+        $message = db_get_field("select d.amocrm_msg from ?:statuses s inner join ?:status_descriptions d on $on where s.status = ?s and lang_code = ?s and s.type = 'O' $condition", $status_to, DESCR_SL);
+        $content = str_replace(array('%ORDER_ID%', '%AMOUNT%', '%NAME%', '%LAST_NAME%', '%USER_EMAIL%', '%COUNTRY%', '%ADDRESS%', '%CITY%', '%STATE%'), array($order_info['order_id'], $order_info['total'], $order_info['firstname'], $order_info['lastname'], $order_info['email'], $order_info['s_country_descr'], $order_info['s_address'], $order_info['s_city'], $order_info['s_state_descr']), $message);
+        if (Registry::get('addons.csc_bsg_world.customer_order_updated') == 'Y')
+        {
+            //сообщенька кастомеру о смене статуса заказа
+            $params = array(
+                'recipient' => 'customer',
+                'body' => $content,
+                'order_data' => $order_info,
+                'event' => 'order_status_changed',
+                'order_id' => $order_info['order_id']
+            );
+            $res = fn_send_amocrm_message($params);
+        }
+    }
+
 	//админское
 	$available_statuses = Registry::get('addons.csc_bsg_world.order_status_condition');
-	if ($place_order == false && $status_to != $status_from && $status_to != 'N' && (empty($available_statuses) || isset($available_statuses['N']) || $available_statuses[$status_to] == "Y"))
+    if ($status_to != $status_from && $status_to != 'N' && (empty($available_statuses) || isset($available_statuses['N']) || $available_statuses[$status_to] == "Y"))
 	{
 		$message = db_get_field("select d.amocrm_msg from ?:statuses s inner join ?:status_descriptions d on $on where s.status = ?s and lang_code = ?s and s.type = 'O' $condition", $status_to, DESCR_SL);
 		$content = str_replace(array('%ORDER_ID%', '%AMOUNT%', '%NAME%', '%LAST_NAME%', '%USER_EMAIL%', '%COUNTRY%', '%ADDRESS%', '%CITY%', '%STATE%'), array($order_info['order_id'], $order_info['total'], $order_info['firstname'], $order_info['lastname'], $order_info['email'], $order_info['s_country_descr'], $order_info['s_address'], $order_info['s_city'], $order_info['s_state_descr']), $message);
@@ -413,29 +324,7 @@ function fn_csc_bsg_world_change_order_status($status_to, $status_from, $order_i
 		{
 			$params = array(
 				'recipient' => 'admin',
-				'body' => __("order_status_changed") . '. ' . $content,
-				'event' => 'order_status_changed',
-				'order_id' => $order_info['order_id']
-			);
-			$res = fn_send_amocrm_message($params);
-		}
-	}
-
-	//кастомерское
-	$available_statuses = Registry::get('addons.csc_bsg_world.customer_order_status_condition');
-	if ($place_order == false && $status_to != $status_from && $status_to != 'N' && (empty($available_statuses) || isset($available_statuses['N']) || $available_statuses[$status_to] == "Y"))
-	{
-		$message = db_get_field("select d.amocrm_msg from ?:statuses s inner join ?:status_descriptions d on $on where s.status = ?s and lang_code = ?s and s.type = 'O' $condition", $status_to, DESCR_SL);
-		$content = str_replace(array('%ORDER_ID%', '%AMOUNT%', '%NAME%', '%LAST_NAME%', '%USER_EMAIL%', '%COUNTRY%', '%ADDRESS%', '%CITY%', '%STATE%'), array($order_info['order_id'], $order_info['total'], $order_info['firstname'], $order_info['lastname'], $order_info['email'], $order_info['s_country_descr'], $order_info['s_address'], $order_info['s_city'], $order_info['s_state_descr']), $message);
-		
-		$status = db_get_field("select description from ?:statuses s inner join ?:status_descriptions d on $on where s.status = ?s and lang_code = ?s and s.type='O' $condition", $status_to, DESCR_SL);
-		if (Registry::get('addons.csc_bsg_world.customer_order_updated') == 'Y')
-		{
-			//сообщенька кастомеру о смене статуса заказа
-			$params = array(
-				'recipient' => 'customer',
-				'body' => __("order_status_changed") . '. ' . $content,
-				'order_data' => $order_info,
+				'body' => __("order_status_changed") . '. Order ID: ' . $order_info['order_id'] . ' Status: ' . $status,
 				'event' => 'order_status_changed',
 				'order_id' => $order_info['order_id']
 			);
