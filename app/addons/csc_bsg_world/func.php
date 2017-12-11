@@ -291,7 +291,7 @@ function fn_csc_bsg_world_change_order_status($status_to, $status_from, $order_i
     }
 
     //кастомерское
-    $available_statuses = Registry::get('addons.csc_bsg_world.order_status_condition');
+    $available_statuses = Registry::get('addons.csc_bsg_world.customer_order_status_condition');
     if ($status_to != $status_from && $status_to != 'N' && (empty($available_statuses) || isset($available_statuses['N']) || $available_statuses[$status_to] == "Y"))
     {
         $message = db_get_field("select d.amocrm_msg from ?:statuses s inner join ?:status_descriptions d on $on where s.status = ?s and lang_code = ?s and s.type = 'O' $condition", $status_to, DESCR_SL);
