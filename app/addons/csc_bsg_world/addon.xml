@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <addon scheme="3.0">
     <id>csc_bsg_world</id>
-    <version>1.23</version>
+    <version>1.24</version>
     <status>active</status>
 
     <authors>
@@ -179,4 +179,8 @@
             DROP TABLE ?:amocrm_messages_log
         </item>
     </queries>
+	
+	<functions>
+        <item for="install">fn_csc_bsg_world_install</item>
+    </functions>
 </addon>

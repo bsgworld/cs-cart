@@ -72,7 +72,7 @@ else
 
 		$limit = db_paginate($page, $items_per_page, $total_msg);
 
-		$messages = db_get_array("select * from ?:amocrm_messages_log $limit");
+		$messages = db_get_array("select * from ?:amocrm_messages_log order by message_id desc $limit");
 
 		foreach($messages as &$msg)
 		{
