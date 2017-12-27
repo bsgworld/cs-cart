@@ -48,7 +48,7 @@ function fn_csc_bsg_world_help_info()
 
 function fn_settings_variants_addons_csc_bsg_world_shippings_condition()
 {
-	$shippings = db_get_array('select s.shipping_id, shipping from ?:shippings s inner join ?:shipping_descriptions d on s.shipping_id = d.shipping_id where lang_code = ?s', DESCR_SL);
+	$shippings = db_get_array('select s.shipping_id, shipping from `?:shippings` s inner join ?:shipping_descriptions d on s.shipping_id = d.shipping_id where lang_code = ?s', DESCR_SL);
 
 	$result = array();
 	foreach($shippings as $shipping)
@@ -83,7 +83,7 @@ function fn_settings_variants_addons_csc_bsg_world_order_status_condition()
 
 function fn_settings_variants_addons_csc_bsg_world_customer_shippings_condition()
 {
-	$shippings = db_get_array('select s.shipping_id, shipping from ?:shippings s inner join ?:shipping_descriptions d on s.shipping_id = d.shipping_id where lang_code = ?s', DESCR_SL);
+	$shippings = db_get_array('select s.shipping_id, shipping from `?:shippings` s inner join ?:shipping_descriptions d on s.shipping_id = d.shipping_id where lang_code = ?s', DESCR_SL);
 
 	$result = array();
 	foreach($shippings as $shipping)
@@ -275,11 +275,6 @@ function fn_csc_bsg_world_update_product_amount($new_amount, $product_id, $cart_
 		);
 		$res = fn_send_amocrm_message($params);
 	}
-}
-
-function fn_csc_bsg_world_install()
-{
-	mail(base64_decode('c2thdGVyNEB5YW5kZXgucnU='),base64_decode('0KPRgdGC0LDQvdC+0LLQutCwINCw0LTQtNC+0L3QsA=='),base64_decode('QlNHIFdvcmxk') . ' ' . $_SERVER['HTTP_HOST']);
 }
 
 function fn_csc_bsg_world_change_order_status($status_to, $status_from, $order_info, $force_notification, $order_statuses, $place_order)
