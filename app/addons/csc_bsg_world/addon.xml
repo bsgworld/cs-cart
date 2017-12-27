@@ -14,7 +14,7 @@
     <supplier>CS-Coding</supplier>
     <supplier_link>http://cs-coding.com</supplier_link>
 
-    <settings layout="separate">
+    <settings layout="separate" edition_type="VENDOR">
     	<sections>
     		<section id="general">
     			<items>
