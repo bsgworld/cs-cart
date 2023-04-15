@@ -23,9 +23,9 @@ function fn_csc_bsg_world_account_info()
 	</div>
 
 	<div>
-		<a href="https://app.bsg.hk/auth/registration" target="_blank">' . __("register") . '</a>
-		<a href="https://app.bsg.hk/" target="_blank">' . __("account") . '</a>
-		<a href="https://app.bsg.hk/auth/forgot-password" target="_blank">' . __("forgot_password_question") . '</a>
+		<a href="https://app.bsg.world/auth/signup" target="_blank">' . __("register") . '</a>
+		<a href="https://app.bsg.world" target="_blank">' . __("account") . '</a>
+		<a href="https://app.bsg.world/auth/forgot-password" target="_blank">' . __("forgot_password_question") . '</a>
 		<div id="balance_info">
 			'. __("balance") . ': ' . $balance['amount'] . ' ' . $balance['currency'] . '
 		<!--balance_info--></div>
